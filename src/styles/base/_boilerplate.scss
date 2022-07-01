@@ -1,0 +1,36 @@
+@use "./typography" as typh;
+@use "../abstracts/colors" as c;
+@use "../abstracts/theme" as t;
+@use "../abstracts/mixins" as mixins;
+
+html {
+  font-size: 62.5%;
+  font-weight: 400;
+}
+
+body {
+  font-family: typh.$font-family;
+  font-size: 1.6rem;
+  background-color: t.$light-primary-bgcolor;
+}
+
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+@include mixins.whenDark {
+  body {
+    color: t.$dark-accent-color;
+    background-color: black;
+  }
+
+  input,
+  select,
+  textarea {
+    color: t.$dark-accent-color;
+    background-color: t.$dark-primary-color;
+  }
+}

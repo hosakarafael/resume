@@ -1,0 +1,23 @@
+@mixin whenDark {
+  html.dark {
+    @content;
+  }
+}
+
+@mixin whenDarkModule {
+  html:global(.dark) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}

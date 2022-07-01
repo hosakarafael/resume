@@ -1,0 +1,18 @@
+@use "../../styles/abstracts/theme" as t;
+@use "../../styles/abstracts/mixins" as mixins;
+
+.form-select {
+  padding: 1rem;
+  margin: 0 0.5rem;
+  border-radius: 5px;
+  &:hover {
+    outline: auto;
+    outline-color: t.$light-primary-color;
+  }
+}
+
+@include mixins.tablet {
+  .form-select {
+    font-size: 2.5rem;
+  }
+}

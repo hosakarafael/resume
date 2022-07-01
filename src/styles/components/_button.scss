@@ -1,0 +1,93 @@
+@use "../abstracts/colors" as c;
+@use "../abstracts/theme" as t;
+@use "../abstracts/mixins" as mixins;
+
+.btn {
+  border-radius: 30px;
+  padding: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+
+  & > i {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    filter: brightness(90%);
+  }
+}
+
+a.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+}
+
+a.btn--primary,
+.btn--primary {
+  background: t.$light-primary-color;
+  color: t.$light-secondary-bgcolor;
+  &:hover {
+    filter: brightness(120%);
+  }
+}
+
+a.btn--secondary,
+.btn--secondary {
+  background: t.$light-secondary-color;
+  color: c.$dark-900;
+}
+
+.btn--small {
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+.btn--medium {
+  height: 60px;
+  font-size: 2rem;
+}
+
+.btn--big {
+  height: 70px;
+  font-size: 3rem;
+}
+
+.btn:hover.btn:disabled {
+  background: t.$light-primary-color;
+}
+
+.btn--stretched {
+  width: 100%;
+}
+
+@include mixins.tablet {
+  .btn--small {
+    height: 60px;
+    font-size: 2rem;
+  }
+}
+
+@include mixins.whenDark {
+  .btn {
+    border: 1px solid t.$dark-accent-color;
+  }
+
+  a.btn--primary,
+  .btn--primary {
+    background-color: t.$dark-primary-color;
+    &:hover {
+      background-color: t.$dark-secondary-bgcolor;
+    }
+  }
+
+  a.btn--secondary,
+  .btn--secondary {
+    background: t.$dark-accent-color;
+  }
+}

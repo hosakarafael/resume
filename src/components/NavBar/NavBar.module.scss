@@ -1,0 +1,23 @@
+@use "../../styles/abstracts/theme" as t;
+
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: t.$light-primary-color;
+  padding: 0.5rem;
+  box-shadow: t.$light-box-shadow;
+  margin-bottom: 2rem;
+}
+
+.nav-item {
+  margin: 0 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.nav-icon {
+  color: t.$light-secondary-bgcolor;
+}

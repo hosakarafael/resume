@@ -1,0 +1,18 @@
+$sizes: (
+  "20": 20px,
+  "40": 4rem,
+  "60": 6rem,
+  "80": 8rem,
+  "168": 16.8rem,
+  "200": 20rem,
+  "400": 40rem,
+  "680": 68rem,
+  "840": 84rem,
+);
+
+@each $size, $value in $sizes {
+  .size--#{$size} {
+    width: $value;
+    height: $value;
+  }
+}
