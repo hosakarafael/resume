@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import useAxios from "../../hook/useAxios";
+import getAxios from "../../utils/getAxios";
 
 const New = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const axios = useAxios();
+  const axios = getAxios();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

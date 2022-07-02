@@ -1,5 +1,5 @@
 import UserList from "../../components/User/UserList";
-import useAxios from "../../hook/useAxios";
+import getAxios from "../../utils/getAxios";
 import NoteEntity from "../../models/UserEntity";
 
 interface HomeProps {
@@ -16,7 +16,7 @@ const Home = ({ users }: HomeProps) => {
 };
 
 Home.getInitialProps = async () => {
-  const axios = useAxios();
+  const axios = getAxios();
 
   const { data } = await axios.get("/users");
   return { users: data };

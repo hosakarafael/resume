@@ -1,7 +1,7 @@
 import UserEntity from "../../models/UserEntity";
 import User from "./User";
 import css from "./User.module.scss";
-import useAxios from "../../hook/useAxios";
+import getAxios from "../../utils/getAxios";
 import { useState } from "react";
 
 interface UserListProps {
@@ -9,7 +9,7 @@ interface UserListProps {
 }
 
 const UserList = ({ users }: UserListProps) => {
-  const axios = useAxios();
+  const axios = getAxios();
   const [usersState, setUsers] = useState<UserEntity[]>(users);
 
   const handleDelete = (user: UserEntity) => {
