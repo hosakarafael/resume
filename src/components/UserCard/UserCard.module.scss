@@ -1,0 +1,109 @@
+@use "../../styles/abstracts/theme" as t;
+
+.card__container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  width: 1200px;
+  background: t.$light-secondary-bgcolor;
+  border-radius: 30px;
+  gap: 30px;
+  box-shadow: t.$light-box-shadow;
+}
+
+.card {
+  display: flex;
+  padding: 2rem;
+}
+
+.card-secondary {
+  padding-top: 2rem;
+  border-top: 3px solid t.$light-secondary-color;
+  display: flex;
+  justify-content: space-around;
+}
+
+.image__container {
+  width: 400px;
+  position: relative;
+}
+
+.edit-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 40px;
+  z-index: 1;
+  background: t.$light-secondary-color;
+  border-radius: 50%;
+  padding: 1rem;
+  width: 50px;
+  height: 50px;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(80%);
+  }
+}
+
+.card-image {
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+}
+
+.card-header {
+  border-bottom: 3px solid t.$light-secondary-color;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+}
+
+.card-heading {
+  font-size: 5rem;
+  font-weight: 800;
+  width: 100%;
+}
+
+.card-sub-heading {
+  font-weight: 600;
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 1rem;
+  gap: 2rem;
+}
+
+.card-label {
+  font-weight: 800;
+}
+
+.card-data {
+  font-weight: 800;
+  opacity: 0.5;
+}
+
+.secondary-title {
+  font-weight: 800;
+  color: t.$light-secondary-bgcolor;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.card-footer {
+  background-color: t.$light-primary-color;
+  border-radius: 0 0 30px 30px;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+}

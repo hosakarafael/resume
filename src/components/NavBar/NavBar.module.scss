@@ -5,16 +5,29 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: t.$light-primary-color;
   padding: 0.5rem;
-  box-shadow: t.$light-box-shadow;
   margin-bottom: 2rem;
+}
+
+.nav-right {
+  display: flex;
 }
 
 .nav-item {
   margin: 0 1rem;
+  font-weight: 800;
+  color: t.$light-secondary-bgcolor;
+  padding: 1.5rem;
+  border-radius: 50%;
+  transition: all 0.3s;
+
   &:hover {
     cursor: pointer;
+    background: t.$light-primary-color;
+  }
+
+  &.active {
+    background: t.$light-primary-color;
   }
 }
 

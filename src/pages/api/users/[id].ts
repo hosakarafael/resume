@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           return res.status(400);
         }
 
-        res.status(200).json({ user });
+        res.status(200).json(user);
       } catch (error) {
         res.status(400);
       }
@@ -36,7 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           return res.status(400);
         }
 
-        res.status(200).json({ user });
+        res.status(200).json(user);
       } catch (error) {
         res.status(400);
       }

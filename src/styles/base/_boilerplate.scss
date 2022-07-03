@@ -11,14 +11,13 @@ html {
 body {
   font-family: typh.$font-family;
   font-size: 1.6rem;
-  background-color: t.$light-primary-bgcolor;
+  background-color: t.$light-secondary-color;
 }
 
 a,
 a:link,
 a:visited {
   text-decoration: none;
-  color: inherit;
 }
 
 @include mixins.whenDark {

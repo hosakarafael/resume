@@ -1,9 +1,9 @@
 import UserList from "../../components/User/UserList";
 import getAxios from "../../utils/getAxios";
-import NoteEntity from "../../models/UserEntity";
+import UserEntity from "../../models/UserEntity";
 
 interface HomeProps {
-  users: NoteEntity[];
+  users: UserEntity[];
 }
 
 const Home = ({ users }: HomeProps) => {
