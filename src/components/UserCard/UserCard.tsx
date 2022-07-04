@@ -1,7 +1,7 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import UserEntity from "../../models/UserEntity";
+import UserEntity, { fullName } from "../../models/UserEntity";
 
 import css from "./UserCard.module.scss";
 
@@ -10,7 +10,7 @@ interface UserCardProps {
   imageUrl?: string;
 }
 
-const UserCard = ({ user }: UserCardProps) => {
+const UserCard = ({ user, imageUrl }: UserCardProps) => {
   return (
     <div className={css["card__container"]}>
       <div className={css["card"]}>
@@ -18,11 +18,12 @@ const UserCard = ({ user }: UserCardProps) => {
           <div className={css["edit-btn"]}>
             <FontAwesomeIcon icon={faCamera} size={"2x"} />
           </div>
-          <img className={css["card-image"]} src={"/api/users/download"} />
+
+          <img className={css["card-image"]} src={imageUrl} />
         </div>
         <div className={css["card-info"]}>
           <div className={css["card-header"]}>
-            <div className={css["card-heading"]}>{user.fullName}</div>
+            <div className={css["card-heading"]}>{fullName(user)}</div>
             <div className={css["card-sub-heading"]}>Web Developer</div>
           </div>
           <div className={css["card-body"]}>

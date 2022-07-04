@@ -1,5 +1,5 @@
-import dbConnect from "../../../utils/dbConnect";
-import UserRepository from "../../../schema/UserRepository";
+import dbConnect from "../../../../utils/dbConnect";
+import UserRepository from "../../../../schema/UserRepository";
 import { NextApiRequest } from "next";
 import { NextApiResponse } from "next";
 

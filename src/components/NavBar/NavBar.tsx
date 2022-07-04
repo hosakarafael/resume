@@ -9,14 +9,16 @@ import NavLinkWithToolTip from "../ToolTip/NavLinkWithToolTip";
 const NavBar = () => (
   <nav className={css["navbar"]}>
     <Link className={css["nav-item"]} href={"/"}>
-      <Image src={"/images/resume.png"} width={60} height={60} />
+      <a>
+        <Image src={"/images/resume.png"} width={60} height={60} />
+      </a>
     </Link>
     <div className={css["nav-right"]}>
       <NavLinkWithToolTip
         tooltipLabel="Show card"
         activeClass={css["active"]}
         className={css["nav-item"]}
-        to={"/profile"}
+        to={`/profile/62c046edf44eb5d2c122785d`}
       >
         <FontAwesomeIcon
           icon={faAddressCard}

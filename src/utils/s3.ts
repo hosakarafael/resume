@@ -14,11 +14,27 @@ const s3Client = new S3({
 export function s3uploadFile() {}
 
 export function s3downloadFile(path: string, key: string) {
-  debugger;
+  const signedUrlExpireSeconds = 60 * 5;
+
   const downloadParams = {
     Bucket: `${bucketName}/${path}`,
     Key: key,
   };
 
-  return s3Client.getObject(downloadParams).createReadStream();
+  return new Promise((resolve) => {
+    s3Client
+      .headObject(downloadParams)
+      .promise()
+      .then(() => {
+        resolve(
+          s3Client.getSignedUrl("getObject", {
+            ...downloadParams,
+            Expires: signedUrlExpireSeconds,
+          })
+        );
+      })
+      .catch(() => {
+        resolve("/images/no-picture.jpeg");
+      });
+  });
 }
