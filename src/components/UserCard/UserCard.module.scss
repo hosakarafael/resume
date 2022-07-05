@@ -43,6 +43,10 @@
     cursor: pointer;
     filter: brightness(80%);
   }
+
+  [id="upload-photo"] {
+    display: none;
+  }
 }
 
 .card-image {

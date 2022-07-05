@@ -1,7 +1,10 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import Router from "next/router";
 import React from "react";
 import UserEntity, { fullName } from "../../models/UserEntity";
+import getAxios from "../../utils/getAxios";
 
 import css from "./UserCard.module.scss";
 
@@ -11,14 +14,37 @@ interface UserCardProps {
 }
 
 const UserCard = ({ user, imageUrl }: UserCardProps) => {
+  const handleUpload = async (e: React.FormEvent) => {
+    const element = e.target;
+
+    if (element instanceof HTMLInputElement) {
+      const files = element.files;
+
+      if (files) {
+        const { data } = await getAxios().post(`/users/${user._id}/upload`, {
+          name: files[0].name,
+          type: files[0].type,
+        });
+        await axios.put(data, files[0]);
+        Router.push(`/profile/${user._id}`);
+      }
+    }
+  };
+
   return (
     <div className={css["card__container"]}>
       <div className={css["card"]}>
         <div className={css["image__container"]}>
-          <div className={css["edit-btn"]}>
-            <FontAwesomeIcon icon={faCamera} size={"2x"} />
-          </div>
-
+          <label htmlFor="upload-photo">
+            <div className={css["edit-btn"]}>
+              <FontAwesomeIcon icon={faCamera} size={"2x"} />
+              <input
+                id="upload-photo"
+                type="file"
+                onChange={(e) => handleUpload(e)}
+              />
+            </div>
+          </label>
           <img className={css["card-image"]} src={imageUrl} />
         </div>
         <div className={css["card-info"]}>
