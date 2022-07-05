@@ -1,10 +1,7 @@
-import dbConnect from "../../../../utils/dbConnect";
 import { NextApiRequest, NextApiResponse } from "next";
 import { s3downloadFile } from "../../../../utils/s3";
 import getAxios from "../../../../utils/getAxios";
 import UserEntity from "../../../../models/UserEntity";
-
-dbConnect();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {

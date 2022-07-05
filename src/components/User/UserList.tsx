@@ -13,14 +13,14 @@ const UserList = ({ users }: UserListProps) => {
   const [usersState, setUsers] = useState<UserEntity[]>(users);
 
   const handleDelete = (user: UserEntity) => {
-    axios.delete("/users/" + user._id);
-    setUsers(usersState.filter((u) => u._id !== user._id));
+    axios.delete("/users/" + user.id);
+    setUsers(usersState.filter((u) => u.id !== user.id));
   };
 
   return (
     <div className={css["user-list-container"]}>
       {usersState.map((user) => (
-        <User key={user._id} user={user} onDelete={handleDelete} />
+        <User key={user.id} user={user} onDelete={handleDelete} />
       ))}
     </div>
   );

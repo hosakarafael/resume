@@ -1,9 +1,8 @@
-import dbConnect from "../../../../utils/dbConnect";
-import UserRepository from "../../../../schema/UserRepository";
 import { NextApiRequest } from "next";
 import { NextApiResponse } from "next";
+import { PrismaClient } from "@prisma/client";
 
-dbConnect();
+const prisma = new PrismaClient();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -11,10 +10,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     method,
   } = req;
 
+  if (typeof id !== "string") {
+    return;
+  }
+
   switch (method) {
     case "GET":
       try {
-        const user = await UserRepository.findById(id);
+        const user = await prisma.user.findUnique({ where: { id: id } });
 
         if (!user) {
           return res.status(400);
@@ -27,9 +30,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case "PUT":
       try {
-        const user = await UserRepository.findByIdAndUpdate(id, req.body, {
-          new: true,
-          runValidator: true,
+        const user = await prisma.user.update({
+          where: { id: id },
+          data: req.body,
         });
 
         if (!user) {
@@ -43,7 +46,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case "DELETE":
       try {
-        const deletedUser = await UserRepository.deleteOne({ _id: id });
+        const deletedUser = await prisma.user.delete({ where: { id: id } });
 
         if (!deletedUser) {
           return res.status(400);
@@ -53,10 +56,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         return res.status(400);
       }
-      break;
     default:
       return res.status(400);
-      break;
   }
   return res.status(400);
 };

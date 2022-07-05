@@ -10,9 +10,14 @@ const Register = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    axios.post("/users", { firstName: firstName, lastName: lastName });
+    axios.post("/users", {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+    });
     setFirstName("");
     setLastName("");
+    setEmail("");
   };
 
   return (

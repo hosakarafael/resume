@@ -1,8 +1,7 @@
-import dbConnect from "../../../utils/dbConnect";
-import UserRepository from "../../../schema/UserRepository";
 import { NextApiRequest, NextApiResponse } from "next";
+import { PrismaClient } from "@prisma/client";
 
-dbConnect();
+const prisma = new PrismaClient();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -10,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (method) {
     case "GET":
       try {
-        const users = await UserRepository.find({});
+        const users = await prisma.user.findMany();
 
         res.status(200).json(users);
       } catch (error) {
@@ -19,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case "POST":
       try {
-        const user = await UserRepository.create(req.body);
+        const user = await prisma.user.create({ data: req.body });
 
         res.status(201).json({ user });
       } catch (error) {

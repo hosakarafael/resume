@@ -21,12 +21,12 @@ const UserCard = ({ user, imageUrl }: UserCardProps) => {
       const files = element.files;
 
       if (files) {
-        const { data } = await getAxios().post(`/users/${user._id}/upload`, {
+        const { data } = await getAxios().post(`/users/${user.id}/upload`, {
           name: files[0].name,
           type: files[0].type,
         });
         await axios.put(data, files[0]);
-        Router.push(`/profile/${user._id}`);
+        Router.push(`/profile/${user.id}`);
       }
     }
   };

@@ -1,9 +1,6 @@
-import dbConnect from "../../../../utils/dbConnect";
 import { NextApiRequest, NextApiResponse } from "next";
 import { s3uploadFile } from "../../../../utils/s3";
 import getAxios from "../../../../utils/getAxios";
-
-dbConnect();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
