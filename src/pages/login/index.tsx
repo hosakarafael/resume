@@ -50,7 +50,6 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.currentTarget.value)}
           />
-          <span className="form-label">E-mail</span>
 
           <button className="btn btn--small btn--primary my-2">Login</button>
         </form>
