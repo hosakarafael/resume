@@ -28,8 +28,8 @@ const NavBar = () => {
   return (
     <nav className={css["navbar"]}>
       <div className={css["nav-left"]}>
-        <Link className={css["nav-item"]} href={"/"}>
-          <a>
+        <Link href={"/"}>
+          <a className={css["brand"]}>
             <Image src={"/images/resume.png"} width={60} height={60} />
           </a>
         </Link>

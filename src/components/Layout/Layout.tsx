@@ -26,6 +26,7 @@ const Layout = ({ children }: LayoutProps) => (
           {children}
         </div>
       </div>
+
       <div className={css["footer"]}>
         Rafael Hideki Hosaka © 2022 ResuMe {process.env.NEXT_PUBLIC_APP_VERSION}
       </div>
