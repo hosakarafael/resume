@@ -29,7 +29,7 @@ function NavLinkWithToolTip({
 }: NavLinkWithToolTipProps) {
   useEffect(() => {
     initializeToolTipText(tooltipLabel);
-  }, []);
+  }, [tooltipLabel]);
 
   return (
     <NavLink

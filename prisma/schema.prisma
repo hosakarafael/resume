@@ -10,10 +10,12 @@ datasource db {
   url      = env("PRISMA_DATABASE_URL")
 }
 
-model user {
+model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   firstName String
   lastName String 
   email String @unique
+  password String
   fileName String?
 }
+

@@ -1,15 +1,15 @@
 import React from "react";
-import UserEntity from "../../models/UserEntity";
 import css from "./User.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { User } from "@prisma/client";
 
 interface UserProps {
-  user: UserEntity;
-  onDelete: (user: UserEntity) => void;
+  user: User;
+  onDelete: (user: User) => void;
 }
 
-const User = ({ user, onDelete }: UserProps) => {
+const UserItem = ({ user, onDelete }: UserProps) => {
   return (
     <div className={css["user-container"]}>
       <div className={css["header"]}>
@@ -25,4 +25,4 @@ const User = ({ user, onDelete }: UserProps) => {
   );
 };
 
-export default User;
+export default UserItem;

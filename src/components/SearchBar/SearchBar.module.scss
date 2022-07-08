@@ -1,0 +1,57 @@
+@use "../../styles/abstracts/theme" as t;
+@use "../../styles/abstracts/mixins" as mixins;
+
+.search-container {
+  border-radius: 30px;
+  background: t.$light-secondary-color;
+  width: 4.5rem;
+  height: 4.5rem;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: width 0.3s;
+}
+
+.search {
+  display: block;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  width: inherit;
+  height: inherit;
+  font-weight: 700;
+}
+
+.search__form {
+  display: flex;
+  align-items: center;
+  width: 31rem;
+  height: inherit;
+}
+
+.search-icon {
+  flex-grow: 1;
+  color: rgba($color: t.$light-accent-color, $alpha: 0.7);
+  transform: scale(1.5);
+  margin: 0 1rem;
+}
+
+.search-container.expanded {
+  width: 31rem;
+}
+
+@include mixins.whenDarkModule {
+  .search-container {
+    background: black;
+  }
+
+  .search-icon {
+    color: t.$dark-accent-color;
+  }
+
+  .search {
+    background-color: transparent;
+  }
+}

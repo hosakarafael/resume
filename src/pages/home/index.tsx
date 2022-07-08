@@ -1,9 +1,10 @@
 import UserList from "../../components/User/UserList";
-import getAxios from "../../utils/getAxios";
-import UserEntity from "../../models/UserEntity";
+import { GetServerSideProps } from "next";
+import { UserPersonalDataService } from "../../service/userService";
+import { User } from "@prisma/client";
 
 interface HomeProps {
-  users: UserEntity[];
+  users: User[] | null;
 }
 
 const Home = ({ users }: HomeProps) => {
@@ -15,11 +16,9 @@ const Home = ({ users }: HomeProps) => {
   );
 };
 
-Home.getInitialProps = async () => {
-  const axios = getAxios();
-
-  const { data } = await axios.get("/users");
-  return { users: data };
+export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+  const users = await UserPersonalDataService.findAll();
+  return { props: { users: users } };
 };
 
 export default Home;

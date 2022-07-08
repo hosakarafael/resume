@@ -1,13 +1,5 @@
-export default interface UserEntity {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  birthDate: Date;
-  gender: string;
-  fileName: string;
-}
+import { User } from "@prisma/client";
 
-export function fullName(user: UserEntity) {
+export function fullName(user: User) {
   return `${user.firstName} ${user.lastName}`;
 }

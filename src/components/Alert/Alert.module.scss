@@ -1,0 +1,53 @@
+$alert-default-color: #024084;
+$alert-default-bg: #cce5ff;
+$alert-success-color: #0f5134;
+$alert-success-bg: rgb(70 155 121);
+$alert-warning-color: #664d03;
+$alert-warning-bg: rgb(255, 243, 205);
+$alert-danger-color: #841f2b;
+$alert-danger-bg: rgb(249, 215, 218);
+
+.alert {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 300px;
+  height: 100px;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: $alert-default-bg;
+  color: $alert-default-color;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+
+  .label {
+    font-weight: 800;
+  }
+
+  .message {
+    font-weight: 400;
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    cursor: pointer;
+  }
+}
+
+.alert--success {
+  background-color: $alert-success-bg;
+  color: $alert-success-color;
+}
+
+.alert--warning {
+  background-color: $alert-warning-bg;
+  color: $alert-warning-color;
+}
+
+.alert--danger {
+  background-color: $alert-danger-bg;
+  color: $alert-danger-color;
+}

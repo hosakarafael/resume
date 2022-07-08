@@ -1,32 +1,31 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { UserPersonalDataService } from "../../../service/userService";
 
-const prisma = new PrismaClient();
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
 
   switch (method) {
     case "GET":
       try {
-        const users = await prisma.user.findMany();
+        const users = await UserPersonalDataService.findAll();
 
-        res.status(200).json(users);
+        return res.status(200).json(users);
       } catch (error) {
-        res.status(400);
+        return res.status(500).json({ message: error });
       }
-      break;
     case "POST":
       try {
-        const user = await prisma.user.create({ data: req.body });
-
-        res.status(201).json({ user });
+        if (req.body) {
+          const user = await UserPersonalDataService.create(req.body);
+          return res.status(201).json({ user });
+        } else {
+          return res.status(400).json({ message: "body empty" });
+        }
       } catch (error) {
-        res.status(400);
+        return res.status(500).json({ message: error });
       }
-      break;
     default:
-      res.status(400);
+      res.status(405).json({ message: "Method not allowed" });
       break;
   }
-};
+}

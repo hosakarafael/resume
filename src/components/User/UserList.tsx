@@ -1,27 +1,30 @@
-import UserEntity from "../../models/UserEntity";
-import User from "./User";
 import css from "./User.module.scss";
 import getAxios from "../../utils/getAxios";
 import { useState } from "react";
+import { User } from "@prisma/client";
+import UserItem from "./UserItem";
 
 interface UserListProps {
-  users: UserEntity[];
+  users: User[] | null;
 }
 
 const UserList = ({ users }: UserListProps) => {
   const axios = getAxios();
-  const [usersState, setUsers] = useState<UserEntity[]>(users);
+  const [usersState, setUsers] = useState<User[] | null>(users);
 
-  const handleDelete = (user: UserEntity) => {
-    axios.delete("/users/" + user.id);
-    setUsers(usersState.filter((u) => u.id !== user.id));
+  const handleDelete = (user: User) => {
+    if (usersState) {
+      axios.delete("/users/" + user.id);
+      setUsers(usersState.filter((u) => u.id !== user.id));
+    }
   };
 
   return (
     <div className={css["user-list-container"]}>
-      {usersState.map((user) => (
-        <User key={user.id} user={user} onDelete={handleDelete} />
-      ))}
+      {usersState &&
+        usersState.map((user) => (
+          <UserItem key={user.id} user={user} onDelete={handleDelete} />
+        ))}
     </div>
   );
 };

@@ -30,7 +30,7 @@ export function s3downloadFile(path: string, key: string) {
     Key: key,
   };
 
-  return new Promise((resolve) => {
+  return new Promise<string>((resolve) => {
     s3Client
       .headObject(downloadParams)
       .promise()
