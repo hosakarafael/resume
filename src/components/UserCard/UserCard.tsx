@@ -1,15 +1,16 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { User } from "@prisma/client";
 import axios from "axios";
 import Router from "next/router";
 import React from "react";
-import UserEntity, { fullName } from "../../models/UserEntity";
+import { fullName } from "../../models/UserEntity";
 import getAxios from "../../utils/getAxios";
 
 import css from "./UserCard.module.scss";
 
 interface UserCardProps {
-  user: UserEntity;
+  user: User;
   imageUrl?: string;
 }
 

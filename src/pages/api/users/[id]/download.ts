@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { s3downloadFile } from "../../../../utils/s3";
 import getAxios from "../../../../utils/getAxios";
-import UserEntity from "../../../../models/UserEntity";
+import { User } from "@prisma/client";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const response = await getAxios().get(`/users/${id}`);
-  const user: UserEntity = response.data;
+  const user: User = response.data;
 
   if (user?.fileName) {
     try {
