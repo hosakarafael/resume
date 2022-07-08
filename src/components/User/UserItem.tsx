@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { User } from "@prisma/client";
 
-interface UserProps {
+interface UserItemProps {
   user: User;
   onDelete: (user: User) => void;
 }
 
-const UserItem = ({ user, onDelete }: UserProps) => {
+const UserItem = ({ user, onDelete }: UserItemProps) => {
   return (
     <div className={css["user-container"]}>
       <div className={css["header"]}>
