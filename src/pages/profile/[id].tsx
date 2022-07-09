@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import React from "react";
 import UserCard from "../../components/UserCard/UserCard";
+import { useUserContext } from "../../context/userContext";
 import { getUserImage } from "../../models/UserEntity";
 import { UserPersonalDataService } from "../../service/userService";
 import { isAuthenticatedRequest } from "../../utils/authentication";
@@ -13,9 +14,17 @@ interface ProfileProps {
 }
 
 const Profile = ({ user, imageUrl }: ProfileProps) => {
+  const { user: currentUser } = useUserContext();
+
   return (
     <div className={css["profile__container"]}>
-      {user && <UserCard user={user} imageUrl={imageUrl} />}
+      {user && (
+        <UserCard
+          user={user}
+          imageUrl={imageUrl}
+          editable={currentUser?.id === user.id}
+        />
+      )}
     </div>
   );
 };

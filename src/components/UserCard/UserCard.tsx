@@ -1,4 +1,4 @@
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@prisma/client";
 import axios from "axios";
@@ -9,13 +9,15 @@ import getAxios from "../../utils/getAxios";
 
 import css from "./UserCard.module.scss";
 import Image from "next/image";
+import DivWithToolTip from "../ToolTip/DivWithToolTip";
 
 interface UserCardProps {
   user: User;
   imageUrl: string;
+  editable?: boolean;
 }
 
-const UserCard = ({ user, imageUrl }: UserCardProps) => {
+const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
   const handleUpload = async (e: React.FormEvent) => {
     const element = e.target;
 
@@ -37,16 +39,25 @@ const UserCard = ({ user, imageUrl }: UserCardProps) => {
     <div className={css["card__container"]}>
       <div className={css["card"]}>
         <div className={css["image__container"]}>
-          <label htmlFor="upload-photo">
-            <div className={css["edit-btn"]}>
-              <FontAwesomeIcon icon={faCamera} size={"2x"} />
-              <input
-                id="upload-photo"
-                type="file"
-                onChange={(e) => handleUpload(e)}
-              />
-            </div>
-          </label>
+          {editable && (
+            <label
+              className={css["edit-image__container"]}
+              htmlFor="upload-photo"
+            >
+              <DivWithToolTip
+                className={css["edit-image"]}
+                tooltipLabel="Change photo"
+              >
+                <FontAwesomeIcon icon={faCamera} size={"2x"} />
+                <input
+                  id="upload-photo"
+                  type="file"
+                  onChange={(e) => handleUpload(e)}
+                />
+              </DivWithToolTip>
+            </label>
+          )}
+
           <Image
             className={css["card-image"]}
             src={imageUrl}
@@ -57,7 +68,16 @@ const UserCard = ({ user, imageUrl }: UserCardProps) => {
         </div>
         <div className={css["card-info"]}>
           <div className={css["card-header"]}>
-            <div className={css["card-heading"]}>{fullName(user)}</div>
+            <div className={css["card-heading"]}>
+              {fullName(user)}
+              <DivWithToolTip tooltipLabel="Details">
+                <FontAwesomeIcon
+                  className={css["info-icon"]}
+                  icon={faCircleInfo}
+                  size={"1x"}
+                />
+              </DivWithToolTip>
+            </div>
             <div className={css["card-sub-heading"]}>Web Developer</div>
           </div>
           <div className={css["card-body"]}>
@@ -74,20 +94,20 @@ const UserCard = ({ user, imageUrl }: UserCardProps) => {
         <div className={css["footer-item"]}>
           <div className={css["secondary-title"]}>Education</div>
           <ul>
-            <li>Computer Science - Bachelor</li>
+            <span>Computer Science - Bachelor</span>
           </ul>
         </div>
 
         <div className={css["footer-item"]}>
           <div className={css["secondary-title"]}>Work Experience</div>
           <ul>
-            <li>Foton</li>
+            <span>Foton</span>
           </ul>
         </div>
         <div className={css["footer-item"]}>
           <div className={css["secondary-title"]}>Skills</div>
           <ul>
-            <li>Java</li>
+            <span>Java</span>
           </ul>
         </div>
       </div>

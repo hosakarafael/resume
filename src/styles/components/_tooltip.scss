@@ -3,11 +3,13 @@
   align-items: center;
   height: 5rem;
   justify-content: center;
+  position: relative;
 }
 
 .tooltip-text {
   position: absolute;
-  top: 7rem;
+  width: max-content;
+  top: 55px;
   color: white;
   background: rgba(0, 0, 0, 0.7);
   font-size: 2rem;

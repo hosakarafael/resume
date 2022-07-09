@@ -41,7 +41,7 @@ const NavBar = () => {
       </div>
       <div className={css["nav-right"]}>
         <NavLinkWithToolTip
-          tooltipLabel={`Profile`}
+          tooltipLabel={`My Profile`}
           activeClass={css["active"]}
           className={css["nav-item"]}
           to={`/profile/${currentUser?.id}`}
@@ -95,4 +95,5 @@ const NavBar = () => {
     </nav>
   );
 };
+
 export default NavBar;
