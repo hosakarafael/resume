@@ -1,9 +1,10 @@
-import { PrismaClient, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import React from "react";
 import UserCard from "../../components/UserCard/UserCard";
+import { getUserImage } from "../../models/UserEntity";
+import { UserPersonalDataService } from "../../service/userService";
 import { isAuthenticatedRequest } from "../../utils/authentication";
-import { s3downloadFile } from "../../utils/s3";
 import css from "./profile.module.scss";
 
 interface ProfileProps {
@@ -29,18 +30,10 @@ export const getServerSideProps: GetServerSideProps<ProfileProps | {}> = async (
     };
   }
   const id = context.query.id as string;
-  const prisma = new PrismaClient();
-  const user = await prisma.user.findUnique({ where: { id: id } });
-  let imageUrl = "";
-  if (user?.fileName) {
-    try {
-      imageUrl = await s3downloadFile(`users/${id}`, user.fileName);
-    } catch (error) {
-      imageUrl = "/images/no-picture.jpeg";
-    }
-  } else {
-    imageUrl = "/images/no-picture.jpeg";
-  }
+
+  const user = await UserPersonalDataService.findById(id);
+  const imageUrl = await getUserImage(user);
+
   return { props: { user, imageUrl } };
 };
 

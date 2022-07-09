@@ -4,14 +4,14 @@
 .search-container {
   border-radius: 30px;
   background: t.$light-secondary-color;
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 5rem;
+  height: 5rem;
   display: flex;
   align-self: center;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: width 0.3s;
+  transition: width 0.5s;
 }
 
 .search {
@@ -29,17 +29,30 @@
   align-items: center;
   width: 31rem;
   height: inherit;
+  animation: fade 0.5s;
 }
 
 .search-icon {
-  flex-grow: 1;
   color: rgba($color: t.$light-accent-color, $alpha: 0.7);
   transform: scale(1.8);
   margin: 0 1rem;
+  animation: fade 0.5s;
 }
 
 .search-container.expanded {
   width: 31rem;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @include mixins.whenDarkModule {

@@ -8,10 +8,11 @@ import { fullName } from "../../models/UserEntity";
 import getAxios from "../../utils/getAxios";
 
 import css from "./UserCard.module.scss";
+import Image from "next/image";
 
 interface UserCardProps {
   user: User;
-  imageUrl?: string;
+  imageUrl: string;
 }
 
 const UserCard = ({ user, imageUrl }: UserCardProps) => {
@@ -46,7 +47,13 @@ const UserCard = ({ user, imageUrl }: UserCardProps) => {
               />
             </div>
           </label>
-          <img className={css["card-image"]} src={imageUrl} />
+          <Image
+            className={css["card-image"]}
+            src={imageUrl}
+            width={300}
+            height={300}
+            layout={"fixed"}
+          />
         </div>
         <div className={css["card-info"]}>
           <div className={css["card-header"]}>

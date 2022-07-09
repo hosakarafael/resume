@@ -24,7 +24,6 @@ function NavLinkWithToolTip({
   showToolTip,
   className,
   activeClass,
-  activeURLs,
   ...props
 }: NavLinkWithToolTipProps) {
   useEffect(() => {

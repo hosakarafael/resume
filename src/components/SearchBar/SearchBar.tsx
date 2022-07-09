@@ -81,7 +81,7 @@ function SearchBar({
         <form className={css["search__form"]} onSubmit={(e) => handleSubmit(e)}>
           <FontAwesomeIcon
             onClick={toggleSearch}
-            className={css["search-icon"]}
+            className={`${css["search-icon"]} ${css.expanded}`}
             icon={faChevronLeft}
           />
 

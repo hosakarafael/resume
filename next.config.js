@@ -6,6 +6,12 @@ const nextConfig = {
     NEXT_PUBLIC_APP_VERSION: process.env.npm_package_version,
   },
 
+  images: {
+    domains: [
+      `${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_BUCKET_REGION}.amazonaws.com`,
+    ],
+  },
+
   async rewrites() {
     return [
       {

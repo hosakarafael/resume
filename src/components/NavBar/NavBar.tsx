@@ -25,6 +25,10 @@ const NavBar = () => {
     Router.replace("/login");
   };
 
+  const handleSubmit = (query: string) => {
+    Router.push(`/search/${query}`);
+  };
+
   return (
     <nav className={css["navbar"]}>
       <div className={css["nav-left"]}>
@@ -33,7 +37,7 @@ const NavBar = () => {
             <Image src={"/images/resume.png"} width={60} height={60} />
           </a>
         </Link>
-        <SearchBar expandable placeHolder="Search..." />
+        <SearchBar onSubmit={handleSubmit} expandable placeHolder="Search..." />
       </div>
       <div className={css["nav-right"]}>
         <NavLinkWithToolTip

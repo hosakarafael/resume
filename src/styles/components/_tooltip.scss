@@ -13,4 +13,14 @@
   font-size: 2rem;
   padding: 0.3rem;
   border-radius: 5px;
+  animation: fade 0.5s;
+}
+
+@keyframes fade {
+  0% {
+    transform: scale(0.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
