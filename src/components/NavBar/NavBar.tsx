@@ -4,9 +4,10 @@ import css from "./NavBar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserPlus,
-  faAddressCard,
   faArrowRightToBracket,
   faArrowRightFromBracket,
+  faIdCard,
+  faImagePortrait,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import NavLinkWithToolTip from "../ToolTip/NavLinkWithToolTip";
@@ -41,16 +42,20 @@ const NavBar = () => {
       </div>
       <div className={css["nav-right"]}>
         <NavLinkWithToolTip
-          tooltipLabel={`My Profile`}
+          tooltipLabel={`My Card`}
           activeClass={css["active"]}
           className={css["nav-item"]}
           to={`/profile/${currentUser?.id}`}
         >
-          <FontAwesomeIcon
-            icon={faAddressCard}
-            size={"2x"}
-            className={css["nav-icon"]}
-          />
+          <FontAwesomeIcon icon={faIdCard} className={css["nav-icon"]} />
+        </NavLinkWithToolTip>
+        <NavLinkWithToolTip
+          tooltipLabel={`My Profile`}
+          activeClass={css["active"]}
+          className={css["nav-item"]}
+          to={`/profile/${currentUser?.id}/detail`}
+        >
+          <FontAwesomeIcon icon={faImagePortrait} className={css["nav-icon"]} />
         </NavLinkWithToolTip>
         <NavLinkWithToolTip
           tooltipLabel="Register"
@@ -58,11 +63,7 @@ const NavBar = () => {
           activeClass={css["active"]}
           to={"/register"}
         >
-          <FontAwesomeIcon
-            icon={faUserPlus}
-            size={"2x"}
-            className={css["nav-icon"]}
-          />
+          <FontAwesomeIcon icon={faUserPlus} className={css["nav-icon"]} />
         </NavLinkWithToolTip>
         {currentUser ? (
           <DivWithToolTip
@@ -73,7 +74,6 @@ const NavBar = () => {
           >
             <FontAwesomeIcon
               icon={faArrowRightFromBracket}
-              size={"2x"}
               className={css["nav-icon"]}
             />
           </DivWithToolTip>
@@ -86,7 +86,6 @@ const NavBar = () => {
           >
             <FontAwesomeIcon
               icon={faArrowRightToBracket}
-              size={"2x"}
               className={css["nav-icon"]}
             />
           </NavLinkWithToolTip>

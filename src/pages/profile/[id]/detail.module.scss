@@ -11,7 +11,6 @@
 .detail {
   padding: 2rem;
   width: 1100px;
-  height: 1200px;
   display: grid;
   grid-template-columns: 350px auto;
 }
@@ -20,7 +19,8 @@
   background-color: t.$light-primary-color;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  align-items: center;
+  padding: 4rem 2rem;
   gap: 10rem;
 }
 

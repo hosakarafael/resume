@@ -47,7 +47,7 @@ function Alert({ message, type, closeAlert }: AlertProps) {
   return (
     <div id="alert" className={`${css.alert} ${getClass(type)}`}>
       <div>
-        <span className={css["label"]}>{getLabel(type)}</span>
+        <div className={css["label"]}>{getLabel(type)}</div>
         <span className={css["message"]}>{message}</span>
       </div>
       <FontAwesomeIcon

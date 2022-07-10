@@ -29,8 +29,9 @@ const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
           <Image
             className={css["user-image"]}
             src={imageUrl}
-            width={300}
-            height={300}
+            width={250}
+            height={250}
+            layout={"fixed"}
           />
           <div>
             <div className={css["info--white"]}>
@@ -90,7 +91,7 @@ const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
               {_.upperCase(fullName(user))}
             </Textfit>
             <div className={css["sub-title"]}>
-              <span>WEB DEVELOPER</span>
+              <span>{_.upperCase(user.title ? user.title : "")}</span>
             </div>
           </div>
 

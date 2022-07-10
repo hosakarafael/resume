@@ -1,4 +1,8 @@
-import { faCamera, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCamera,
+  faCircleInfo,
+  faSquarePen,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@prisma/client";
 import axios from "axios";
@@ -53,6 +57,7 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
                 <input
                   id="upload-photo"
                   type="file"
+                  accept=".png,.jpeg,.jpg"
                   onChange={(e) => handleUpload(e)}
                 />
               </DivWithToolTip>
@@ -70,7 +75,20 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
         <div className={css["card-info"]}>
           <div className={css["card-header"]}>
             <div className={css["card-heading"]}>
-              {fullName(user)}
+              <div className={css["user-name"]}>
+                {fullName(user)}
+
+                {editable && (
+                  <DivWithToolTip tooltipLabel="Edit my card">
+                    <FontAwesomeIcon
+                      className={css["info-icon"]}
+                      icon={faSquarePen}
+                      size={"1x"}
+                    />
+                  </DivWithToolTip>
+                )}
+              </div>
+
               <Link href={`/profile/${user.id}/detail`}>
                 <DivWithToolTip tooltipLabel="Details">
                   <FontAwesomeIcon
@@ -81,13 +99,15 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
                 </DivWithToolTip>
               </Link>
             </div>
-            <div className={css["card-sub-heading"]}>Web Developer</div>
+            <div className={css["card-sub-heading"]}>{user.title}</div>
           </div>
           <div className={css["card-body"]}>
             <span className={css["card-label"]}>AGE</span>
             <span className={css["card-data"]}>30</span>
             <span className={css["card-label"]}>ADDRESS</span>
             <span className={css["card-data"]}>some address</span>
+            <span className={css["card-label"]}>PHONE</span>
+            <span className={css["card-data"]}>101012190</span>
             <span className={css["card-label"]}>E-MAIL</span>
             <span className={css["card-data"]}>{user.email}</span>
           </div>

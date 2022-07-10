@@ -1,10 +1,11 @@
-import { PrismaClient, User } from "@prisma/client";
+import { User } from "@prisma/client";
+import { prisma } from "../utils/getPrisma";
 
 abstract class BaseUserService {
   protected prisma;
   protected select;
   constructor(select: UserSelector) {
-    this.prisma = new PrismaClient();
+    this.prisma = prisma;
     this.select = select;
   }
 
@@ -47,6 +48,7 @@ interface UserSelector {
   lastName: boolean;
   password: boolean;
   fileName: boolean;
+  title: boolean;
 }
 
 class UserAllDataService extends BaseUserService {
@@ -58,6 +60,7 @@ class UserAllDataService extends BaseUserService {
       firstName: true,
       lastName: true,
       fileName: true,
+      title: true,
     }
   ) {
     super(select);
@@ -73,6 +76,7 @@ class UserPersonalDataService extends BaseUserService {
       firstName: true,
       lastName: true,
       fileName: true,
+      title: true,
     }
   ) {
     super(select);

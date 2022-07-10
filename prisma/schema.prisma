@@ -17,5 +17,7 @@ model User {
   email String @unique
   password String
   fileName String?
+
+  title String?
 }
 

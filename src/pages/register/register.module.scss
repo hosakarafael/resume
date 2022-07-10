@@ -9,7 +9,7 @@
 
 .register {
   background-color: t.$light-secondary-bgcolor;
-  width: 500px;
+  width: 1000px;
   border-radius: 10px;
   box-shadow: t.$light-box-shadow;
 }
@@ -20,7 +20,13 @@
 }
 
 .form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem 3rem;
+}
+
+.form-group {
   display: flex;
   flex-direction: column;
-  padding: 2rem 3rem;
+  margin: 1rem 0;
 }
