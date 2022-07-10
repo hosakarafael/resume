@@ -6,13 +6,12 @@ import { NavLink } from "../NavLink/NavLink";
 interface NavLinkWithToolTipProps {
   children: JSX.Element;
   to: string;
-  faClasses: string;
   tooltipLabel: string;
   showToolTip: boolean;
+  exact?: boolean;
   initializeToolTipText: (text: string) => void;
   className: string;
   activeClass?: string;
-  activeURLs?: string[];
   [x: string]: any;
 }
 
@@ -23,6 +22,7 @@ function NavLinkWithToolTip({
   initializeToolTipText,
   showToolTip,
   className,
+  exact,
   activeClass,
   ...props
 }: NavLinkWithToolTipProps) {
@@ -35,6 +35,7 @@ function NavLinkWithToolTip({
       className={className}
       href={to}
       activeClass={activeClass}
+      exact={exact}
       {...props}
     >
       {children}

@@ -5,6 +5,6 @@ export const cookieConfig = {
   secure: process.env.NODE_ENV !== "development",
   domain: process.env.COOKIE_DOMAIN,
   sameSite: "strict",
-  maxAge: 3600,
+  maxAge: 60 * 60 * 24,
   path: "/",
 } as CookieSerializeOptions;

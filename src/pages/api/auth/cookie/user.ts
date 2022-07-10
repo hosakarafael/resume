@@ -6,7 +6,7 @@ import { UserPersonalDataService } from "../../../../service/userService";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (!req.cookies.auth) {
-    return res.status(200).json({});
+    return res.status(200).json(null);
   }
   const jwt = req.cookies.auth;
   const decodedJwt = verify(jwt, secret);
@@ -14,13 +14,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const id = decodedJwt.sub as string;
 
   if (!id) {
-    return res.status(200).json({});
+    return res.status(200).json(null);
   }
 
   const user = await UserPersonalDataService.findById(id);
 
   if (!user) {
-    return res.status(200).json({});
+    return res.status(200).json(null);
   }
 
   return res.status(200).json(user);

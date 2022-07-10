@@ -1,11 +1,11 @@
 import { User } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import React from "react";
-import UserCard from "../../components/UserCard/UserCard";
-import { useUserContext } from "../../context/userContext";
-import { getUserImage } from "../../models/UserEntity";
-import { UserPersonalDataService } from "../../service/userService";
-import { isAuthenticatedRequest } from "../../utils/authentication";
+import UserCard from "../../../components/UserCard/UserCard";
+import { useUserContext } from "../../../context/userContext";
+import { getUserImage } from "../../../models/UserEntity";
+import { UserPersonalDataService } from "../../../service/userService";
+import { isAuthenticatedRequest } from "../../../utils/authentication";
 import css from "./profile.module.scss";
 
 interface ProfileProps {

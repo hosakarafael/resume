@@ -26,6 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         if (process.env.NODE_ENV === "development") {
           delete config.domain;
         }
+
         res.setHeader("Set-Cookie", cookie.serialize("auth", jwt, config));
         res.status(200).json(user);
       } else {

@@ -10,6 +10,7 @@ import getAxios from "../../utils/getAxios";
 import css from "./UserCard.module.scss";
 import Image from "next/image";
 import DivWithToolTip from "../ToolTip/DivWithToolTip";
+import Link from "next/link";
 
 interface UserCardProps {
   user: User;
@@ -70,13 +71,15 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
           <div className={css["card-header"]}>
             <div className={css["card-heading"]}>
               {fullName(user)}
-              <DivWithToolTip tooltipLabel="Details">
-                <FontAwesomeIcon
-                  className={css["info-icon"]}
-                  icon={faCircleInfo}
-                  size={"1x"}
-                />
-              </DivWithToolTip>
+              <Link href={`/profile/${user.id}/detail`}>
+                <DivWithToolTip tooltipLabel="Details">
+                  <FontAwesomeIcon
+                    className={css["info-icon"]}
+                    icon={faCircleInfo}
+                    size={"1x"}
+                  />
+                </DivWithToolTip>
+              </Link>
             </div>
             <div className={css["card-sub-heading"]}>Web Developer</div>
           </div>
