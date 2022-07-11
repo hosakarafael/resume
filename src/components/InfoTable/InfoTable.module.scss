@@ -1,0 +1,41 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+
+  & > .info-header > span {
+    border-bottom: 3px solid black;
+  }
+}
+
+.info--white {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+
+  & > .info-header > span {
+    border-bottom: 3px solid white;
+  }
+
+  & > * {
+    color: white;
+  }
+}
+
+.info-header {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.info-item {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

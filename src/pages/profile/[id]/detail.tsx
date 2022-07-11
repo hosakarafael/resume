@@ -15,6 +15,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { isAuthenticatedRequest } from "../../../utils/securityUtils";
 import { REDIRECT_REQUEST_LOGOUT } from "../../logout/index";
+import InfoTable from "../../../components/InfoTable/InfoTable";
+import InfoItem from "../../../components/InfoTable/InfoItem";
 
 interface UserDetailProps {
   user: User | null;
@@ -36,54 +38,37 @@ const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
             layout={"fixed"}
           />
           <div>
-            <div className={css["info--white"]}>
-              <div className={css["info-header"]}>
-                <span>ABOUT ME</span>
-              </div>
-              <span className={css["info-item"]}>
-                Date of birth: May 27 1992
-              </span>
-              <span className={css["info-item"]}>Age: 30</span>
-              <span className={css["info-item"]}>Gender: Male</span>
-              <span className={css["info-item"]}>
-                Birth place: Brasilia, Brazil
-              </span>
-            </div>
+            <InfoTable white title="ABOUT ME">
+              <InfoItem>Date of birth: May 27 1992 </InfoItem>
+              <InfoItem>Age: 30 </InfoItem>
+              <InfoItem>Gender: Male </InfoItem>
+              <InfoItem>Birth place: Brasilia, Brazil </InfoItem>
+            </InfoTable>
 
-            <div className={css["info--white"]}>
-              <div className={css["info-header"]}>
-                <span>CONTACT</span>
-              </div>
-              <div className={css["info-item"]}>
+            <InfoTable white title="CONTACT">
+              <InfoItem>
                 <FontAwesomeIcon icon={faLocationDot} size={"lg"} />
-                <span>
-                  Rua Antonio de Camargo,39 Vila Sao Jorge - Guarulhos - Sao
-                  Paulo - Brazil
-                </span>
-              </div>
-              <span className={css["info-item"]}>
+                Rua Antonio de Camargo,39 Vila Sao Jorge - Guarulhos - Sao Paulo
+                - Brazil
+              </InfoItem>
+              <InfoItem>
                 <FontAwesomeIcon icon={faPhone} />
                 +55 11 913992918
-              </span>
-              <span className={css["info-item"]}>
+              </InfoItem>
+              <InfoItem>
                 <FontAwesomeIcon icon={faEnvelope} />
                 rafaelhosaka@gmail.com
-              </span>
-            </div>
+              </InfoItem>
+            </InfoTable>
 
-            <div className={css["info--white"]}>
-              <div className={css["info-header"]}>
-                <span>INTERESTS</span>
-              </div>
-              <div className={css["info-grid"]}>
-                <span>Games</span>
-                <span>Movie</span>
-                <span>Programming</span>
-                <span>Walking</span>
-                <span>Science</span>
-                <span>Animals</span>
-              </div>
-            </div>
+            <InfoTable white grid title="INTERESTS">
+              <InfoItem>Games</InfoItem>
+              <InfoItem>Movie</InfoItem>
+              <InfoItem>Programming</InfoItem>
+              <InfoItem>Walking</InfoItem>
+              <InfoItem>Animals</InfoItem>
+              <InfoItem>Science</InfoItem>
+            </InfoTable>
           </div>
         </div>
 
@@ -97,11 +82,8 @@ const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
             </div>
           </div>
 
-          <div className={css["info"]}>
-            <div className={css["info-header"]}>
-              <span>CAREER OBJECTIVE</span>
-            </div>
-            <span className={css["info-item"]}>
+          <InfoTable title="CAREER OBJECTIVE">
+            <InfoItem>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit.
               Voluptatibus, ex accusamus! Repudiandae, doloremque? Similique
               inventore assumenda aperiam nulla nisi aut, sapiente ratione
@@ -109,67 +91,52 @@ const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
               tenetur deserunt sint iure nobis? Nostrum similique minima,
               assumenda impedit earum omnis autem aperiam, ad perferendis
               officia maiores mollitia ab.
-            </span>
-          </div>
+            </InfoItem>
+          </InfoTable>
 
-          <div className={css["info"]}>
-            <div className={css["info-header"]}>
-              <span>EDUCATION</span>
-            </div>
-            <div className={css["info-title"]}>
-              <span>Computer Science - Bachelor Degree</span>
-              <span>Universidade Catolica de Brasilia</span>
-              <span>2011 to 2014 at, Brasilia, Brazil</span>
-            </div>
-          </div>
+          <InfoTable title="EDUCATION">
+            <InfoItem>Computer Science - Bachelor Degree</InfoItem>
+            <InfoItem>Universidade Catolica de Brasilia</InfoItem>
+            <InfoItem>2011 to 2014 at, Brasilia, Brazil</InfoItem>
+          </InfoTable>
 
-          <div className={css["info"]}>
-            <div className={css["info-header"]}>
-              <span>SKILL</span>
-            </div>
-            <div className={css["info-grid"]}>
-              <span>HTML/CSS/Javascript/React JS/Next JS</span>
-              <span>JAVA/Spring Boot</span>
-              <span>SQL - Postgresql/MySQL</span>
-              <span>NOSQL - MongoDB</span>
-              <span>Typescript/Sass/AWS S3</span>
-              <span>2011 to 2014 at, Brasilia, Brazil</span>
-            </div>
-          </div>
+          <InfoTable grid title="SKILL">
+            <InfoItem>HTML/CSS/Javascript/React JS/Next JS</InfoItem>
+            <InfoItem>JAVA/Spring Boot</InfoItem>
+            <InfoItem>SQL - Postgresql/MySQL</InfoItem>
+            <InfoItem>NOSQL - MongoDB</InfoItem>
+            <InfoItem>Typescript/Sass/AWS S3</InfoItem>
+            <InfoItem>2011 to 2014 at, Brasilia, Brazil</InfoItem>
+          </InfoTable>
 
-          <div className={css["info"]}>
-            <div className={css["info-header"]}>
-              <span>EXPERIENCE</span>
+          <InfoTable title="EXPERIENCE">
+            <div className={css["info-subtitle"]}>
+              <InfoItem>Machine Operator and Quality inspection</InfoItem>
+              <InfoItem>Murata manufacturing</InfoItem>
+              <InfoItem>2018 to 2022 at Shimane, Japan</InfoItem>
             </div>
-            <div className={css["info-title"]}>
-              <span>Machine Operator and Quality inspection</span>
-              <span>Murata manufacturing</span>
-              <span>2018 to 2022 at Shimane, Japan</span>
-            </div>
-
-            <p>
+            <InfoItem>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quia
               sunt veniam eligendi laboriosam exercitationem quas aliquam
               corrupti debitis veritatis quisquam commodi fuga consequuntur
               minima error quasi, eum iste cumque tenetur culpa illum, facilis
               velit? Quae aliquam animi nulla voluptatem placeat rem eveniet
               ipsam, distinctio accusamus nesciunt deleniti. Aperiam, quae.
-            </p>
-
-            <div className={css["info-title"]}>
-              <span>Web Developer</span>
-              <span>Foton</span>
-              <span>2015 to 2016 at Brasilia, Brazil</span>
+            </InfoItem>
+            <div className={css["info-subtitle"]}>
+              <InfoItem>Web Developer</InfoItem>
+              <InfoItem>Foton</InfoItem>
+              <InfoItem>2015 to 2016 at Brasilia, Brazil</InfoItem>
             </div>
-            <p>
+            <InfoItem>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quia
               sunt veniam eligendi laboriosam exercitationem quas aliquam
               corrupti debitis veritatis quisquam commodi fuga consequuntur
               minima error quasi, eum iste cumque tenetur culpa illum, facilis
               velit? Quae aliquam animi nulla voluptatem placeat rem eveniet
               ipsam, distinctio accusamus nesciunt deleniti. Aperiam, quae.
-            </p>
-          </div>
+            </InfoItem>
+          </InfoTable>
         </div>
       </div>
     </div>

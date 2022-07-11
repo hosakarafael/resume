@@ -4,7 +4,7 @@ import { CookieSerializeOptions } from "cookie";
 import { User } from "@prisma/client";
 
 export const SECRET = process.env.BCRYPT_SECRET as string;
-export const EXPIRATION = 5; //seconds
+export const EXPIRATION = 60 * 60 * 24; //seconds
 
 export const cookieConfig = {
   httpOnly: true,
