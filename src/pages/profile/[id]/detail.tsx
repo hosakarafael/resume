@@ -13,6 +13,7 @@ import {
   faLocationDot,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
+import { isAuthenticatedRequest } from "../../../utils/authentication";
 
 interface UserDetailProps {
   user: User | null;
@@ -177,6 +178,13 @@ const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
 export const getServerSideProps: GetServerSideProps<UserDetailProps> = async (
   context
 ) => {
+  if (!isAuthenticatedRequest(context.req)) {
+    return {
+      redirect: { destination: "/login", permanent: false },
+      props: {},
+    };
+  }
+
   const id = context.query.id as string;
   const user = await UserPersonalDataService.findById(id);
   const imageUrl = await getUserImage(user);
