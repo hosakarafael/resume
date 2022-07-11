@@ -12,19 +12,11 @@ import {
 import Link from "next/link";
 import NavLinkWithToolTip from "../ToolTip/NavLinkWithToolTip";
 import { useUserContext } from "../../context/userContext";
-import DivWithToolTip from "../ToolTip/DivWithToolTip";
-import getAxios from "../../utils/getAxios";
 import Router from "next/router";
 import SearchBar from "../SearchBar/SearchBar";
 
 const NavBar = () => {
-  const { user: currentUser, setUser: setCurrentUser } = useUserContext();
-
-  const handleLogout = () => {
-    getAxios().delete("/logout");
-    setCurrentUser?.(null);
-    Router.replace("/login");
-  };
+  const { user: currentUser } = useUserContext();
 
   const handleSubmit = (query: string) => {
     Router.push(`/search/${query}`);
@@ -66,17 +58,17 @@ const NavBar = () => {
           <FontAwesomeIcon icon={faUserPlus} className={css["nav-icon"]} />
         </NavLinkWithToolTip>
         {currentUser ? (
-          <DivWithToolTip
+          <NavLinkWithToolTip
             tooltipLabel="Logout"
             className={css["nav-item"]}
             activeClass={css["active"]}
-            onClick={handleLogout}
+            to={"/logout"}
           >
             <FontAwesomeIcon
               icon={faArrowRightFromBracket}
               className={css["nav-icon"]}
             />
-          </DivWithToolTip>
+          </NavLinkWithToolTip>
         ) : (
           <NavLinkWithToolTip
             tooltipLabel="Login"

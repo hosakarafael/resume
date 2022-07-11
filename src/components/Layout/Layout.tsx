@@ -17,9 +17,8 @@ const Layout = ({ children }: LayoutProps) => (
               rel="icon"
               type="image/png"
               sizes="32x32"
-              href="/favicon-32x32.png"
+              href="/favicon/favicon-32x32.png"
             />
-
             <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
           </Head>
           <NavBar />

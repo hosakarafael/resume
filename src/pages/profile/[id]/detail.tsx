@@ -13,7 +13,8 @@ import {
   faLocationDot,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
-import { isAuthenticatedRequest } from "../../../utils/authentication";
+import { isAuthenticatedRequest } from "../../../utils/securityUtils";
+import { REDIRECT_REQUEST_LOGOUT } from "../../logout/index";
 
 interface UserDetailProps {
   user: User | null;
@@ -179,10 +180,7 @@ export const getServerSideProps: GetServerSideProps<UserDetailProps> = async (
   context
 ) => {
   if (!isAuthenticatedRequest(context.req)) {
-    return {
-      redirect: { destination: "/login", permanent: false },
-      props: {},
-    };
+    return REDIRECT_REQUEST_LOGOUT;
   }
 
   const id = context.query.id as string;

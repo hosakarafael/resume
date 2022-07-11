@@ -1,7 +1,7 @@
 import { verify } from "jsonwebtoken";
 import { NextApiRequest } from "next";
 import { NextApiResponse } from "next";
-import { secret } from "../../../../utils/jwtConfig";
+import { SECRET } from "../../../../utils/securityUtils";
 import { UserPersonalDataService } from "../../../../service/userService";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(null);
   }
   const jwt = req.cookies.auth;
-  const decodedJwt = verify(jwt, secret);
+  const decodedJwt = verify(jwt, SECRET);
 
   const id = decodedJwt.sub as string;
 

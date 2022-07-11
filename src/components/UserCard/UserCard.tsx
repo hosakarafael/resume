@@ -90,13 +90,15 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
               </div>
 
               <Link href={`/profile/${user.id}/detail`}>
-                <DivWithToolTip tooltipLabel="Details">
-                  <FontAwesomeIcon
-                    className={css["info-icon"]}
-                    icon={faCircleInfo}
-                    size={"1x"}
-                  />
-                </DivWithToolTip>
+                <a>
+                  <DivWithToolTip tooltipLabel="Details">
+                    <FontAwesomeIcon
+                      className={css["info-icon"]}
+                      icon={faCircleInfo}
+                      size={"1x"}
+                    />
+                  </DivWithToolTip>
+                </a>
               </Link>
             </div>
             <div className={css["card-sub-heading"]}>{user.title}</div>

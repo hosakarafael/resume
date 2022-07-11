@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
-import { expiration, secret } from "../../utils/jwtConfig";
+import { cookieConfig, generateJWT } from "../../utils/securityUtils";
 import cookie from "cookie";
-import { cookieConfig } from "../../utils/cookieConfig";
+
 import { UserAllDataService } from "../../service/userService";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -20,8 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (user) {
     compare(password, user?.password, function (err, result) {
       if (!err && result) {
-        const claims = { sub: user.id, username: user.email };
-        const jwt = sign(claims, secret, { expiresIn: expiration });
+        const jwt = generateJWT(user);
         const config = cookieConfig;
         if (process.env.NODE_ENV === "development") {
           delete config.domain;

@@ -5,8 +5,9 @@ import UserCard from "../../../components/UserCard/UserCard";
 import { useUserContext } from "../../../context/userContext";
 import { getUserImage } from "../../../models/UserEntity";
 import { UserPersonalDataService } from "../../../service/userService";
-import { isAuthenticatedRequest } from "../../../utils/authentication";
 import css from "./profile.module.scss";
+import { isAuthenticatedRequest } from "../../../utils/securityUtils";
+import { REDIRECT_REQUEST_LOGOUT } from "../../logout/index";
 
 interface ProfileProps {
   user: User | null;
@@ -33,10 +34,7 @@ export const getServerSideProps: GetServerSideProps<ProfileProps | {}> = async (
   context
 ) => {
   if (!isAuthenticatedRequest(context.req)) {
-    return {
-      redirect: { destination: "/login", permanent: false },
-      props: {},
-    };
+    return REDIRECT_REQUEST_LOGOUT;
   }
   const id = context.query.id as string;
 
