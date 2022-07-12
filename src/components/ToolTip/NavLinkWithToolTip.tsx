@@ -9,6 +9,7 @@ interface NavLinkWithToolTipProps {
   tooltipLabel: string;
   showToolTip: boolean;
   exact?: boolean;
+  query?: { [x: string]: string };
   initializeToolTipText: (text: string) => void;
   className: string;
   activeClass?: string;
@@ -24,6 +25,7 @@ function NavLinkWithToolTip({
   className,
   exact,
   activeClass,
+  query,
   ...props
 }: NavLinkWithToolTipProps) {
   useEffect(() => {
@@ -36,6 +38,7 @@ function NavLinkWithToolTip({
       href={to}
       activeClass={activeClass}
       exact={exact}
+      query={query}
       {...props}
     >
       {children}

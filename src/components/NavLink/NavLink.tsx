@@ -10,6 +10,7 @@ interface NavLinkProps {
   children: ReactElement | ReactElement[];
   className?: string;
   activeClass?: string;
+  query?: { [x: string]: string };
 }
 
 function NavLink({
@@ -18,13 +19,14 @@ function NavLink({
   children,
   className,
   activeClass,
+  query,
 }: NavLinkProps) {
   const { asPath } = useRouter();
 
   const isActive = exact ? asPath === href : asPath.startsWith(href);
 
   return (
-    <Link href={href}>
+    <Link href={{ pathname: href, query: query }}>
       <a className={isActive ? className + " " + activeClass : className}>
         {children}
       </a>

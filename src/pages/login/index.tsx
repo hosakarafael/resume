@@ -22,7 +22,7 @@ const Login = () => {
       });
       delete data["password"];
       setCurrentUser?.(data);
-      Router.replace("/");
+      Router.replace(`/profile/${data.id}`);
     } catch (error: any) {
       if (error?.response?.data) {
         dispatchAlert(error.response.data.message, "danger");
