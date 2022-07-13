@@ -1,7 +1,7 @@
 import {
   faCamera,
   faCircleInfo,
-  faSquarePen,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@prisma/client";
@@ -81,9 +81,8 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
                 {editable && (
                   <DivWithToolTip tooltipLabel="Edit my card">
                     <FontAwesomeIcon
-                      className={css["info-icon"]}
-                      icon={faSquarePen}
-                      size={"1x"}
+                      className={css["edit-icon"]}
+                      icon={faPen}
                     />
                   </DivWithToolTip>
                 )}

@@ -99,6 +99,18 @@
   }
 }
 
+.edit-icon {
+  width: 30px;
+  height: 30px;
+  color: t.$light-secondary-bgcolor;
+  border-radius: 50%;
+  background-color: t.$light-primary-color;
+  padding: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .card-sub-heading {
   font-weight: 600;
   font-size: 3rem;

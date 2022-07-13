@@ -42,7 +42,7 @@ const NavBar = () => {
           <FontAwesomeIcon icon={faIdCard} className={css["nav-icon"]} />
         </NavLinkWithToolTip>
         <NavLinkWithToolTip
-          tooltipLabel={`My Profile`}
+          tooltipLabel={`My Resume`}
           activeClass={css["active"]}
           className={css["nav-item"]}
           to={`/profile/${currentUser?.id}/detail`}

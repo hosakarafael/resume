@@ -20,6 +20,11 @@ a:visited {
   text-decoration: none;
 }
 
+input {
+  color: inherit;
+  padding: 0;
+}
+
 @include mixins.whenDark {
   body {
     color: t.$dark-accent-color;
