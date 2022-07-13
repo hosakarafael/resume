@@ -1,6 +1,6 @@
 {
   "name": "resume",
-  "version": "0.13.17",
+  "version": "0.13.18",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8000",
@@ -21,7 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.4.1",
-    "next": "12.2.0",
+    "next": "^12.2.2",
     "npm": "^8.13.2",
     "nprogress": "^0.2.0",
     "react": "18.2.0",

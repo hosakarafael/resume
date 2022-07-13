@@ -1,7 +1,7 @@
 import React from "react";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 
 interface TransitionProps {
   children: JSX.Element;
@@ -9,6 +9,19 @@ interface TransitionProps {
 
 const Transition = ({ children }: TransitionProps) => {
   const { asPath } = useRouter();
+
+  const routeChange = () => {
+    const tempFix = () => {
+      const allStyleElems = document.querySelectorAll('style[media="x"]');
+      allStyleElems.forEach((elem) => {
+        elem.removeAttribute("media");
+      });
+    };
+    tempFix();
+  };
+
+  Router.events.on("routeChangeComplete", routeChange);
+  Router.events.on("routeChangeStart", routeChange);
 
   return (
     <AnimatePresence initial={false} exitBeforeEnter>
