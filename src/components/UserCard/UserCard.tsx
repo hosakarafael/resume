@@ -108,7 +108,7 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
             <span className={css["card-label"]}>ADDRESS</span>
             <span className={css["card-data"]}>some address</span>
             <span className={css["card-label"]}>PHONE</span>
-            <span className={css["card-data"]}>101012190</span>
+            <span className={css["card-data"]}>{user.phone}</span>
             <span className={css["card-label"]}>E-MAIL</span>
             <span className={css["card-data"]}>{user.email}</span>
           </div>

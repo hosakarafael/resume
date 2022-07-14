@@ -17,7 +17,14 @@ model User {
   email String @unique
   password String
   fileName String?
+  phone String?
+  gender Gender @default(NONE)
 
   title String?
 }
 
+enum Gender {
+  NONE
+  MALE
+  FEMALE
+}

@@ -1,6 +1,29 @@
 import { User } from "@prisma/client";
 import { prisma } from "../utils/getPrisma";
 
+interface UserSelector {
+  id: boolean;
+  email: boolean;
+  firstName: boolean;
+  lastName: boolean;
+  password: boolean;
+  fileName: boolean;
+  phone: boolean;
+  gender: boolean;
+  title: boolean;
+}
+
+const commonSelector = {
+  id: true,
+  email: true,
+  firstName: true,
+  lastName: true,
+  fileName: true,
+  phone: true,
+  gender: true,
+  title: true,
+};
+
 abstract class BaseUserService {
   protected prisma;
   protected select;
@@ -41,44 +64,14 @@ abstract class BaseUserService {
   }
 }
 
-interface UserSelector {
-  id: boolean;
-  email: boolean;
-  firstName: boolean;
-  lastName: boolean;
-  password: boolean;
-  fileName: boolean;
-  title: boolean;
-}
-
 class UserAllDataService extends BaseUserService {
-  constructor(
-    select: UserSelector = {
-      id: true,
-      email: true,
-      password: true,
-      firstName: true,
-      lastName: true,
-      fileName: true,
-      title: true,
-    }
-  ) {
+  constructor(select: UserSelector = { ...commonSelector, password: true }) {
     super(select);
   }
 }
 
 class UserPersonalDataService extends BaseUserService {
-  constructor(
-    select: UserSelector = {
-      id: true,
-      email: true,
-      password: false,
-      firstName: true,
-      lastName: true,
-      fileName: true,
-      title: true,
-    }
-  ) {
+  constructor(select: UserSelector = { ...commonSelector, password: false }) {
     super(select);
   }
 }

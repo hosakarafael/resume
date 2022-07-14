@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import css from "./UserResume.module.scss";
 import Image from "next/image";
-import { User } from "@prisma/client";
+import { Gender, User } from "@prisma/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DivWithToolTip from "../ToolTip/DivWithToolTip";
 import {
@@ -10,6 +10,7 @@ import {
   faLocationDot,
   faPen,
   faPhone,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import InfoTable from "../InfoTable/InfoTable";
 import InfoItem from "../InfoTable/InfoItem";
@@ -17,7 +18,7 @@ import { Textfit } from "react-textfit";
 import { fullName } from "../../models/UserEntity";
 import _ from "lodash";
 import { useAlert } from "../Alert/Alert";
-import { useEditable } from "../../hook/useEditableText";
+import { useEditableText } from "../../hook/useEditableText";
 import getAxios from "../../utils/getAxios";
 
 interface UserResumeProps {
@@ -25,12 +26,17 @@ interface UserResumeProps {
   imageUrl: string;
   editable?: boolean;
 }
-
 const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
   const [editting, setEditting] = useState(false);
   const [alert, dispatchAlert] = useAlert();
 
-  const [editableName, name] = useEditable(fullName(user));
+  const [editableName, name, resetName] = useEditableText(fullName(user));
+  const [editablePhone, phone, resetPhone] = useEditableText(user.phone);
+  const [editableGender, gender, resetGender] = useEditableText(
+    user.gender,
+    Object.values(Gender)
+  );
+  const [editableTitle, title, resetTitle] = useEditableText(user.title);
 
   const handleEdit = () => {
     setEditting(true);
@@ -40,9 +46,24 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
     );
   };
 
+  const handleCancel = () => {
+    setEditting(false);
+    resetName();
+    resetPhone();
+    resetTitle();
+    resetGender();
+    dispatchAlert("Changes reverted", "info");
+  };
+
   const handleSave = async () => {
     const [firstName, lastName] = name.split(" ");
-    await getAxios().put(`/users/${user.id}`, { firstName, lastName });
+    await getAxios().put(`/users/${user.id}`, {
+      firstName,
+      lastName,
+      phone,
+      gender,
+      title,
+    });
     dispatchAlert("Changes saved successfully", "success");
     setEditting(false);
   };
@@ -60,18 +81,30 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
             layout={"fixed"}
           />
           {editable && (
-            <>
+            <div className={css["btn-area"]}>
               {editting ? (
-                <DivWithToolTip
-                  onClick={handleSave}
-                  tooltipLabel="Save changes"
-                >
-                  <FontAwesomeIcon
-                    className={css["edit-btn"]}
-                    icon={faCheck}
-                    size={"2x"}
-                  />
-                </DivWithToolTip>
+                <>
+                  <DivWithToolTip
+                    onClick={handleSave}
+                    tooltipLabel="Save changes"
+                  >
+                    <FontAwesomeIcon
+                      className={css["edit-btn"]}
+                      icon={faCheck}
+                      size={"2x"}
+                    />
+                  </DivWithToolTip>
+                  <DivWithToolTip
+                    onClick={handleCancel}
+                    tooltipLabel="Cancel editting"
+                  >
+                    <FontAwesomeIcon
+                      className={css["edit-btn"]}
+                      icon={faXmark}
+                      size={"2x"}
+                    />
+                  </DivWithToolTip>
+                </>
               ) : (
                 <DivWithToolTip onClick={handleEdit} tooltipLabel="Edit resume">
                   <FontAwesomeIcon
@@ -81,14 +114,14 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
                   />
                 </DivWithToolTip>
               )}
-            </>
+            </div>
           )}
         </div>
         <div>
           <InfoTable white title="ABOUT ME">
             <InfoItem>Date of birth: May 27 1992 </InfoItem>
             <InfoItem>Age: 30 </InfoItem>
-            <InfoItem>Gender: Male </InfoItem>
+            <InfoItem>Gender: {editableGender(editting)}</InfoItem>
             <InfoItem>Birth place: Brasilia, Brazil </InfoItem>
           </InfoTable>
 
@@ -100,7 +133,7 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
             </InfoItem>
             <InfoItem>
               <FontAwesomeIcon icon={faPhone} />
-              +55 11 913992918
+              {editablePhone(editting)}
             </InfoItem>
             <InfoItem>
               <FontAwesomeIcon icon={faEnvelope} />
@@ -122,17 +155,11 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
       <div className={css["right-side"]}>
         <div className={css["right-header"]}>
           <Textfit mode="single" className={`${css["user-name"]}`}>
-            <div
-              className={`${css["editable-field"]} ${
-                editting && css["editable-highlight"]
-              }`}
-            >
-              {editableName(editting)}
-            </div>
-            {/* {_.upperCase(fullName(user))} */}
+            {editableName(editting)}
           </Textfit>
-          <div className={css["sub-title"]}>
-            <span>{_.upperCase(user.title ? user.title : "")}</span>
+          <div className={css["title"]}>
+            {editableTitle(editting)}
+            <span className={css["title-line"]} />
           </div>
         </div>
 
