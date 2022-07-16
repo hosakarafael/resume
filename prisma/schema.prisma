@@ -19,8 +19,11 @@ model User {
   fileName String?
   phone String?
   gender Gender @default(NONE)
-
+  address String?
   title String?
+  careerObjective String?
+  interests String[] @default(["","","","","",""])
+  skills String[] @default(["","","","","",""])
 }
 
 enum Gender {

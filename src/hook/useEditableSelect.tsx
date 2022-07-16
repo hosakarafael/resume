@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import css from "./styles/useEditable.module.scss";
 
-export function useEditableText(
-  value: string | null
+export function useEditableSelect(
+  value: string | null,
+  options: string[]
 ): [(editable: boolean) => JSX.Element, string, () => void] {
   const [text, setText] = useState(value ? value : "");
 
@@ -10,19 +11,20 @@ export function useEditableText(
     setText(value ? value : "");
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     setText(e.currentTarget.value);
   };
 
   const getEditableField = () => {
     return (
-      <input
-        type="text"
-        value={text}
-        onChange={handleChange}
-        className={css["editable"]}
-      />
+      <select value={text} onChange={handleChange} className={css["editable"]}>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     );
   };
 

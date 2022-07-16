@@ -20,6 +20,9 @@ import _ from "lodash";
 import { useAlert } from "../Alert/Alert";
 import { useEditableText } from "../../hook/useEditableText";
 import getAxios from "../../utils/getAxios";
+import { useEditableSelect } from "../../hook/useEditableSelect";
+import { useEditableTextArea } from "../../hook/useEditableTextArea";
+import { useEditableCollection } from "../../hook/useEditableCollection";
 
 interface UserResumeProps {
   user: User;
@@ -32,11 +35,23 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
 
   const [editableName, name, resetName] = useEditableText(fullName(user));
   const [editablePhone, phone, resetPhone] = useEditableText(user.phone);
-  const [editableGender, gender, resetGender] = useEditableText(
+  const [editableGender, gender, resetGender] = useEditableSelect(
     user.gender,
     Object.values(Gender)
   );
+  const [editableAddress, address, resetAddress] = useEditableText(
+    user.address
+  );
   const [editableTitle, title, resetTitle] = useEditableText(user.title);
+  const [editableCareerObjective, careerObjective, resetCareerObjective] =
+    useEditableTextArea(user.careerObjective);
+
+  const [editableInterests, interests, resetInterests] = useEditableCollection(
+    user.interests
+  );
+  const [editableSkills, skills, resetSkills] = useEditableCollection(
+    user.skills
+  );
 
   const handleEdit = () => {
     setEditting(true);
@@ -48,21 +63,35 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
 
   const handleCancel = () => {
     setEditting(false);
+    reset();
+    dispatchAlert("Changes reverted", "info");
+  };
+
+  const reset = () => {
     resetName();
     resetPhone();
     resetTitle();
     resetGender();
-    dispatchAlert("Changes reverted", "info");
+    resetAddress();
+    resetCareerObjective();
+    resetSkills();
+    resetInterests();
   };
 
   const handleSave = async () => {
+    console.log(interests);
+
     const [firstName, lastName] = name.split(" ");
     await getAxios().put(`/users/${user.id}`, {
       firstName,
       lastName,
       phone,
       gender,
+      address,
       title,
+      careerObjective,
+      interests,
+      skills,
     });
     dispatchAlert("Changes saved successfully", "success");
     setEditting(false);
@@ -128,8 +157,7 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
           <InfoTable white title="CONTACT">
             <InfoItem>
               <FontAwesomeIcon icon={faLocationDot} size={"lg"} />
-              Rua Antonio de Camargo,39 Vila Sao Jorge - Guarulhos - Sao Paulo -
-              Brazil
+              {editableAddress(editting)}
             </InfoItem>
             <InfoItem>
               <FontAwesomeIcon icon={faPhone} />
@@ -142,12 +170,11 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
           </InfoTable>
 
           <InfoTable white grid title="INTERESTS">
-            <InfoItem>Games</InfoItem>
-            <InfoItem>Movie</InfoItem>
-            <InfoItem>Programming</InfoItem>
-            <InfoItem>Walking</InfoItem>
-            <InfoItem>Animals</InfoItem>
-            <InfoItem>Science</InfoItem>
+            {editableInterests.map((editableInterest, index) => (
+              <InfoItem key={index}>
+                {editableInterest(index, editting)}
+              </InfoItem>
+            ))}
           </InfoTable>
         </div>
       </div>
@@ -164,15 +191,7 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
         </div>
 
         <InfoTable title="CAREER OBJECTIVE">
-          <InfoItem>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Voluptatibus, ex accusamus! Repudiandae, doloremque? Similique
-            inventore assumenda aperiam nulla nisi aut, sapiente ratione labore
-            accusantium. Maiores dolor mollitia tempora id, dolore tenetur
-            deserunt sint iure nobis? Nostrum similique minima, assumenda
-            impedit earum omnis autem aperiam, ad perferendis officia maiores
-            mollitia ab.
-          </InfoItem>
+          <InfoItem>{editableCareerObjective(editting)}</InfoItem>
         </InfoTable>
 
         <InfoTable title="EDUCATION">
@@ -182,12 +201,9 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
         </InfoTable>
 
         <InfoTable grid title="SKILL">
-          <InfoItem>HTML/CSS/Javascript/React JS/Next JS</InfoItem>
-          <InfoItem>JAVA/Spring Boot</InfoItem>
-          <InfoItem>SQL - Postgresql/MySQL</InfoItem>
-          <InfoItem>NOSQL - MongoDB</InfoItem>
-          <InfoItem>Typescript/Sass/AWS S3</InfoItem>
-          <InfoItem>2011 to 2014 at, Brasilia, Brazil</InfoItem>
+          {editableSkills.map((editableSkill, index) => (
+            <InfoItem key={index}>{editableSkill(index, editting)}</InfoItem>
+          ))}
         </InfoTable>
 
         <InfoTable title="EXPERIENCE">

@@ -1,6 +1,8 @@
 @use "../../styles/abstracts/theme" as t;
 
 .editable-text__container {
+  width: 100%;
+
   & > * {
     width: 100%;
     outline: 0;
@@ -11,5 +13,17 @@
     background-color: color;
     border: 3px solid black;
     border-radius: 10px;
+  }
+
+  textarea.editable {
+    resize: none;
+  }
+
+  select.editable {
+    cursor: pointer;
+  }
+
+  .uneditable {
+    white-space: pre-wrap;
   }
 }

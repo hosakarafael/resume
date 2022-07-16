@@ -11,6 +11,10 @@ interface UserSelector {
   phone: boolean;
   gender: boolean;
   title: boolean;
+  address: boolean;
+  careerObjective: boolean;
+  interests: boolean;
+  skills: boolean;
 }
 
 const commonSelector = {
@@ -22,6 +26,10 @@ const commonSelector = {
   phone: true,
   gender: true,
   title: true,
+  address: true,
+  careerObjective: true,
+  interests: true,
+  skills : true
 };
 
 abstract class BaseUserService {
