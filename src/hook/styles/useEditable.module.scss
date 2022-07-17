@@ -3,20 +3,24 @@
 .editable-text__container {
   width: 100%;
 
-  & > * {
-    width: 100%;
-    outline: 0;
-  }
-
   & > .editable {
     color: black;
-    background-color: color;
+    background-color: t.$light-secondary-bgcolor;
     border: 3px solid black;
     border-radius: 10px;
   }
 
+  span.editable {
+    width: 100%;
+  }
+
+  input.editable {
+    width: 100%;
+  }
+
   textarea.editable {
     resize: none;
+    width: 100%;
   }
 
   select.editable {

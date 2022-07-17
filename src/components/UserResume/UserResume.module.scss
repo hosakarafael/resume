@@ -2,8 +2,9 @@
 
 .resume {
   padding: 2rem;
-  width: 1100px;
+  max-width: 1200px;
   display: grid;
+  justify-content: center;
   grid-template-columns: 350px auto;
 }
 
@@ -61,12 +62,15 @@
 .right-header {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 }
 
 .user-name {
   font-weight: 300;
-  line-height: 9rem;
+  line-height: 10rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-bottom: 1rem;
+  gap: 20px;
 }
 
 .title {

@@ -15,7 +15,6 @@ import {
 import InfoTable from "../InfoTable/InfoTable";
 import InfoItem from "../InfoTable/InfoItem";
 import { Textfit } from "react-textfit";
-import { fullName } from "../../models/UserEntity";
 import _ from "lodash";
 import { useAlert } from "../Alert/Alert";
 import { useEditableText } from "../../hook/useEditableText";
@@ -33,7 +32,12 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
   const [editting, setEditting] = useState(false);
   const [alert, dispatchAlert] = useAlert();
 
-  const [editableName, name, resetName] = useEditableText(fullName(user));
+  const [editableFirstName, firstName, resetFirstName] = useEditableText(
+    user.firstName
+  );
+  const [editableLastName, lastName, resetLastName] = useEditableText(
+    user.lastName
+  );
   const [editablePhone, phone, resetPhone] = useEditableText(user.phone);
   const [editableGender, gender, resetGender] = useEditableSelect(
     user.gender,
@@ -47,10 +51,10 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
     useEditableTextArea(user.careerObjective);
 
   const [editableInterests, interests, resetInterests] = useEditableCollection(
-    user.interests
+    user.interests.length ? user.interests : Array(6).fill("")
   );
   const [editableSkills, skills, resetSkills] = useEditableCollection(
-    user.skills
+    user.skills.length ? user.skills : Array(6).fill("")
   );
 
   const handleEdit = () => {
@@ -68,7 +72,8 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
   };
 
   const reset = () => {
-    resetName();
+    resetFirstName();
+    resetLastName();
     resetPhone();
     resetTitle();
     resetGender();
@@ -79,9 +84,6 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
   };
 
   const handleSave = async () => {
-    console.log(interests);
-
-    const [firstName, lastName] = name.split(" ");
     await getAxios().put(`/users/${user.id}`, {
       firstName,
       lastName,
@@ -181,8 +183,11 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
 
       <div className={css["right-side"]}>
         <div className={css["right-header"]}>
-          <Textfit mode="single" className={`${css["user-name"]}`}>
-            {editableName(editting)}
+          <Textfit mode="single">
+            <div className={`${css["user-name"]}`}>
+              {editableFirstName(editting)}
+              {editableLastName(editting)}
+            </div>
           </Textfit>
           <div className={css["title"]}>
             {editableTitle(editting)}
