@@ -10,6 +10,11 @@ datasource db {
   url      = env("PRISMA_DATABASE_URL")
 }
 
+type Section{
+  title String?
+  description String?
+}
+
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   firstName String
@@ -24,7 +29,11 @@ model User {
   careerObjective String?
   interests String[] @default(["","","","","",""])
   skills String[] @default(["","","","","",""])
+  educations Section[]
+  works Section[]
 }
+
+
 
 enum Gender {
   NONE

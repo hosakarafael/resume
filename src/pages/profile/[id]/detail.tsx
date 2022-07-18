@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetServerSideProps } from "next";
 import { User } from "@prisma/client";
 import { UserPersonalDataService } from "../../../service/userService";
@@ -8,6 +8,7 @@ import { isAuthenticatedRequest } from "../../../utils/securityUtils";
 import { REDIRECT_REQUEST_LOGOUT } from "../../logout/index";
 import UserResume from "../../../components/UserResume/UserResume";
 import { useUserContext } from "../../../context/userContext";
+import getAxios from "../../../utils/getAxios";
 
 interface UserDetailProps {
   user: User | null;
@@ -16,14 +17,22 @@ interface UserDetailProps {
 
 const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
   const { user: currentUser } = useUserContext();
-  if (!user) return <div>No user!</div>;
+  const [userState, setUser] = useState(user);
+
+  if (!userState) return <div>No user!</div>;
+
+  const handleSave = async (data: any) => {
+    const res = await getAxios().put(`/users/${userState.id}`, data);
+    setUser(res.data);
+  };
 
   return (
     <div className={css["detail__container"]}>
       <UserResume
-        user={user}
+        user={userState}
         imageUrl={imageUrl}
-        editable={currentUser?.id === user.id}
+        editable={currentUser?.id === userState.id}
+        onSave={handleSave}
       />
     </div>
   );

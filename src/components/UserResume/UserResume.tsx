@@ -18,17 +18,23 @@ import { Textfit } from "react-textfit";
 import _ from "lodash";
 import { useAlert } from "../Alert/Alert";
 import { useEditableText } from "../../hook/useEditableText";
-import getAxios from "../../utils/getAxios";
 import { useEditableSelect } from "../../hook/useEditableSelect";
 import { useEditableTextArea } from "../../hook/useEditableTextArea";
 import { useEditableCollection } from "../../hook/useEditableCollection";
+import { useEditableSections } from "../../hook/useEditableSections";
 
 interface UserResumeProps {
   user: User;
   imageUrl: string;
   editable?: boolean;
+  onSave?: (user: any) => void;
 }
-const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
+const UserResume = ({
+  user,
+  imageUrl,
+  editable = false,
+  onSave,
+}: UserResumeProps) => {
   const [editting, setEditting] = useState(false);
   const [alert, dispatchAlert] = useAlert();
 
@@ -56,6 +62,36 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
   const [editableSkills, skills, resetSkills] = useEditableCollection(
     user.skills.length ? user.skills : Array(6).fill("")
   );
+  const [
+    editableEducations,
+    educations,
+    resetEducations,
+    addEducation,
+    deleteEducation,
+  ] = useEditableSections(user.educations);
+
+  const [editableWorks, works, resetWorks, addWork, deleteWork] =
+    useEditableSections(user.works);
+
+  const handleSave = () => {
+    if (onSave) {
+      onSave({
+        firstName,
+        lastName,
+        address,
+        title,
+        phone,
+        gender,
+        careerObjective,
+        interests,
+        skills,
+        educations,
+        works,
+      });
+      dispatchAlert("Changes saved successfully", "success");
+      setEditting(false);
+    }
+  };
 
   const handleEdit = () => {
     setEditting(true);
@@ -81,22 +117,35 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
     resetCareerObjective();
     resetSkills();
     resetInterests();
+    resetEducations();
+    resetWorks();
   };
 
-  const handleSave = async () => {
-    await getAxios().put(`/users/${user.id}`, {
-      firstName,
-      lastName,
-      phone,
-      gender,
-      address,
-      title,
-      careerObjective,
-      interests,
-      skills,
-    });
-    dispatchAlert("Changes saved successfully", "success");
-    setEditting(false);
+  const renderDeleteSection = (deleteFunction: (index: number) => void) => {
+    return (
+      <div className={css["delete-btn__container"]}>
+        <DivWithToolTip
+          onClick={deleteFunction}
+          tooltipLabel="Delete this section"
+        >
+          <FontAwesomeIcon className={css["delete-btn"]} icon={faXmark} />
+        </DivWithToolTip>
+      </div>
+    );
+  };
+
+  const renderAddButtonSection = (
+    label: string,
+    addFunction: (object: { title: string; description: string }) => void
+  ) => {
+    return (
+      <button
+        className="btn btn--primary my-1"
+        onClick={() => addFunction({ title: "", description: "" })}
+      >
+        {label}
+      </button>
+    );
   };
 
   return (
@@ -198,11 +247,20 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
         <InfoTable title="CAREER OBJECTIVE">
           <InfoItem>{editableCareerObjective(editting)}</InfoItem>
         </InfoTable>
-
         <InfoTable title="EDUCATION">
-          <InfoItem>Computer Science - Bachelor Degree</InfoItem>
-          <InfoItem>Universidade Catolica de Brasilia</InfoItem>
-          <InfoItem>2011 to 2014 at, Brasilia, Brazil</InfoItem>
+          <>
+            {editableEducations.map((editableEducation, index) => {
+              return (
+                <>
+                  {editting &&
+                    renderDeleteSection(() => deleteEducation(index))}
+                  {editableEducation(index, editting)}
+                </>
+              );
+            })}
+            {editting &&
+              renderAddButtonSection("Add new education", addEducation)}
+          </>
         </InfoTable>
 
         <InfoTable grid title="SKILL">
@@ -210,34 +268,19 @@ const UserResume = ({ user, imageUrl, editable = false }: UserResumeProps) => {
             <InfoItem key={index}>{editableSkill(index, editting)}</InfoItem>
           ))}
         </InfoTable>
-
-        <InfoTable title="EXPERIENCE">
-          <div className={css["info-subtitle"]}>
-            <InfoItem>Machine Operator and Quality inspection</InfoItem>
-            <InfoItem>Murata manufacturing</InfoItem>
-            <InfoItem>2018 to 2022 at Shimane, Japan</InfoItem>
-          </div>
-          <InfoItem>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quia
-            sunt veniam eligendi laboriosam exercitationem quas aliquam corrupti
-            debitis veritatis quisquam commodi fuga consequuntur minima error
-            quasi, eum iste cumque tenetur culpa illum, facilis velit? Quae
-            aliquam animi nulla voluptatem placeat rem eveniet ipsam, distinctio
-            accusamus nesciunt deleniti. Aperiam, quae.
-          </InfoItem>
-          <div className={css["info-subtitle"]}>
-            <InfoItem>Web Developer</InfoItem>
-            <InfoItem>Foton</InfoItem>
-            <InfoItem>2015 to 2016 at Brasilia, Brazil</InfoItem>
-          </div>
-          <InfoItem>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quia
-            sunt veniam eligendi laboriosam exercitationem quas aliquam corrupti
-            debitis veritatis quisquam commodi fuga consequuntur minima error
-            quasi, eum iste cumque tenetur culpa illum, facilis velit? Quae
-            aliquam animi nulla voluptatem placeat rem eveniet ipsam, distinctio
-            accusamus nesciunt deleniti. Aperiam, quae.
-          </InfoItem>
+        <InfoTable title="WORK EXPERIENCE">
+          <>
+            {editableWorks.map((editableWork, index) => {
+              return (
+                <div key={index} className={css["editable-text__container"]}>
+                  {editting && renderDeleteSection(() => deleteWork(index))}
+                  {editableWork(index, editting)}
+                </div>
+              );
+            })}
+            {editting &&
+              renderAddButtonSection("Add new work experience", addWork)}
+          </>
         </InfoTable>
       </div>
     </div>

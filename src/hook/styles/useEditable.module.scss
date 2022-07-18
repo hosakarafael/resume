@@ -3,7 +3,7 @@
 .editable-text__container {
   width: 100%;
 
-  & > .editable {
+  .editable {
     color: black;
     background-color: t.$light-secondary-bgcolor;
     border: 3px solid black;
@@ -12,6 +12,8 @@
 
   span.editable {
     width: 100%;
+    min-width: 100px;
+    display: inline-block;
   }
 
   input.editable {
@@ -29,5 +31,12 @@
 
   .uneditable {
     white-space: pre-wrap;
+  }
+
+  .title {
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
   }
 }

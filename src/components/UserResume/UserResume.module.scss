@@ -47,13 +47,6 @@
   }
 }
 
-.info-subtitle {
-  font-weight: 700;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0;
-}
-
 .right-side {
   background: t.$light-secondary-bgcolor;
   padding: 1rem;
@@ -98,6 +91,23 @@
   border-top: 5px solid black;
   height: 0;
   width: 100%;
+}
+
+.delete-btn__container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  background: t.$light-primary-color;
+  border-radius: 50%;
+  padding: 0.5rem;
+  width: 15px;
+  height: 15px;
+  color: t.$light-secondary-bgcolor;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @keyframes popup {
