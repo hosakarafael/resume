@@ -9,6 +9,7 @@ interface UserSelector {
   password: boolean;
   fileName: boolean;
   phone: boolean;
+  birthDate: boolean;
   gender: boolean;
   title: boolean;
   address: boolean;
@@ -27,6 +28,7 @@ const commonSelector = {
   fileName: true,
   phone: true,
   gender: true,
+  birthDate: true,
   title: true,
   address: true,
   careerObjective: true,

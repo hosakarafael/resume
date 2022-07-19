@@ -14,7 +14,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import InfoTable from "../InfoTable/InfoTable";
 import InfoItem from "../InfoTable/InfoItem";
-import { Textfit } from "react-textfit";
 import _ from "lodash";
 import { useAlert } from "../Alert/Alert";
 import { useEditableText } from "../../hook/useEditableText";
@@ -22,6 +21,14 @@ import { useEditableSelect } from "../../hook/useEditableSelect";
 import { useEditableTextArea } from "../../hook/useEditableTextArea";
 import { useEditableCollection } from "../../hook/useEditableCollection";
 import { useEditableSections } from "../../hook/useEditableSections";
+import {
+  calculateAge,
+  DAYS,
+  formatDate,
+  MONTHS,
+  splitDate,
+  YEARS,
+} from "../../utils/dateUtils";
 
 interface UserResumeProps {
   user: User;
@@ -70,10 +77,28 @@ const UserResume = ({
     deleteEducation,
   ] = useEditableSections(user.educations);
 
+  const date = splitDate(user.birthDate);
+  const [editableYear, year, resetYear] = useEditableSelect(
+    date[0].toString(),
+    YEARS
+  );
+  const [editableMonth, month, resetMonth] = useEditableSelect(
+    date[1].toString(),
+    Object.keys(MONTHS),
+    Object.values(MONTHS)
+  );
+  const [editableDay, day, resetDay] = useEditableSelect(
+    date[2].toString(),
+    DAYS
+  );
+
   const [editableWorks, works, resetWorks, addWork, deleteWork] =
     useEditableSections(user.works);
 
   const handleSave = () => {
+    const birthDate = new Date(parseInt(year), parseInt(month), parseInt(day));
+    console.log(birthDate);
+
     if (onSave) {
       onSave({
         firstName,
@@ -87,6 +112,7 @@ const UserResume = ({
         skills,
         educations,
         works,
+        birthDate,
       });
       dispatchAlert("Changes saved successfully", "success");
       setEditting(false);
@@ -119,6 +145,9 @@ const UserResume = ({
     resetInterests();
     resetEducations();
     resetWorks();
+    resetDay();
+    resetMonth();
+    resetYear();
   };
 
   const renderDeleteSection = (deleteFunction: (index: number) => void) => {
@@ -199,8 +228,21 @@ const UserResume = ({
         </div>
         <div>
           <InfoTable white title="ABOUT ME">
-            <InfoItem>Date of birth: May 27 1992 </InfoItem>
-            <InfoItem>Age: 30 </InfoItem>
+            <InfoItem>
+              <span className={css["label-date"]}>Date of birth:</span>
+              <div className={css["user-date"]}>
+                {!editting ? (
+                  <>{formatDate(user.birthDate)}</>
+                ) : (
+                  <>
+                    {editableMonth(editting)}
+                    {editableDay(editting)}
+                    {editableYear(editting)}
+                  </>
+                )}
+              </div>
+            </InfoItem>
+            <InfoItem>Age: {calculateAge(user.birthDate).toString()}</InfoItem>
             <InfoItem>Gender: {editableGender(editting)}</InfoItem>
             <InfoItem>Birth place: Brasilia, Brazil </InfoItem>
           </InfoTable>
@@ -232,12 +274,11 @@ const UserResume = ({
 
       <div className={css["right-side"]}>
         <div className={css["right-header"]}>
-          <Textfit mode="single">
-            <div className={`${css["user-name"]}`}>
-              {editableFirstName(editting)}
-              {editableLastName(editting)}
-            </div>
-          </Textfit>
+          <div className={`${css["user-name"]}`}>
+            {editableFirstName(editting)}
+            {editableLastName(editting)}
+          </div>
+
           <div className={css["title"]}>
             {editableTitle(editting)}
             <span className={css["title-line"]} />
@@ -251,11 +292,11 @@ const UserResume = ({
           <>
             {editableEducations.map((editableEducation, index) => {
               return (
-                <>
+                <div key={index} className={css["editable-text__container"]}>
                   {editting &&
                     renderDeleteSection(() => deleteEducation(index))}
                   {editableEducation(index, editting)}
-                </>
+                </div>
               );
             })}
             {editting &&

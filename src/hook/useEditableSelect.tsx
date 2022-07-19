@@ -3,7 +3,8 @@ import css from "./styles/useEditable.module.scss";
 
 export function useEditableSelect(
   value: string | null,
-  options: string[]
+  options: string[],
+  keys?: string[]
 ): [(editable: boolean) => JSX.Element, string, () => void] {
   const [text, setText] = useState(value ? value : "");
 
@@ -19,8 +20,8 @@ export function useEditableSelect(
   const getEditableField = () => {
     return (
       <select value={text} onChange={handleChange} className={css["editable"]}>
-        {options.map((option) => (
-          <option key={option} value={option}>
+        {options.map((option, index) => (
+          <option key={index} value={keys ? keys[index] : option}>
             {option}
           </option>
         ))}

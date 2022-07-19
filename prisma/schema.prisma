@@ -24,6 +24,7 @@ model User {
   fileName String?
   phone String?
   gender Gender @default(NONE)
+  birthDate DateTime?
   address String?
   title String?
   careerObjective String?

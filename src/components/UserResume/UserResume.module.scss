@@ -2,10 +2,10 @@
 
 .resume {
   padding: 2rem;
-  max-width: 1200px;
+  width: 1200px;
   display: grid;
   justify-content: center;
-  grid-template-columns: 350px auto;
+  grid-template-columns: 350px 1fr min-content;
 }
 
 .left-side {
@@ -47,6 +47,14 @@
   }
 }
 
+.label-date {
+  white-space: nowrap;
+}
+
+.user-date {
+  display: flex;
+}
+
 .right-side {
   background: t.$light-secondary-bgcolor;
   padding: 1rem;
@@ -60,10 +68,13 @@
 .user-name {
   font-weight: 300;
   line-height: 10rem;
-  display: grid;
-  grid-template-columns: auto auto;
+  display: flex;
+  padding: 1rem;
   margin-bottom: 1rem;
   gap: 20px;
+  text-align: justify;
+  font-size: max(7vw, 10rem);
+  white-space: nowrap;
 }
 
 .title {
