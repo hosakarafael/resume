@@ -38,7 +38,9 @@ export const getServerSideProps: GetServerSideProps<ProfileProps | {}> = async (
   }
   const id = context.query.id as string;
 
-  const user = await UserPersonalDataService.findById(id);
+  const result = await UserPersonalDataService.findById(id);
+
+  const user = JSON.parse(JSON.stringify(result));
   const imageUrl = await getUserImage(user);
 
   return { props: { user, imageUrl } };

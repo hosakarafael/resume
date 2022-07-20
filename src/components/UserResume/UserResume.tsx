@@ -21,14 +21,8 @@ import { useEditableSelect } from "../../hook/useEditableSelect";
 import { useEditableTextArea } from "../../hook/useEditableTextArea";
 import { useEditableCollection } from "../../hook/useEditableCollection";
 import { useEditableSections } from "../../hook/useEditableSections";
-import {
-  calculateAge,
-  DAYS,
-  formatDate,
-  MONTHS,
-  splitDate,
-  YEARS,
-} from "../../utils/dateUtils";
+import { calculateAge } from "../../utils/dateUtils";
+import { useEditableDate } from "../../hook/useEditableDate";
 
 interface UserResumeProps {
   user: User;
@@ -56,6 +50,9 @@ const UserResume = ({
     user.gender,
     Object.values(Gender)
   );
+  const [editableBirthPlace, birthPlace, resetBirthPlace] = useEditableText(
+    user.birthPlace
+  );
   const [editableAddress, address, resetAddress] = useEditableText(
     user.address
   );
@@ -77,28 +74,14 @@ const UserResume = ({
     deleteEducation,
   ] = useEditableSections(user.educations);
 
-  const date = splitDate(user.birthDate);
-  const [editableYear, year, resetYear] = useEditableSelect(
-    date[0].toString(),
-    YEARS
-  );
-  const [editableMonth, month, resetMonth] = useEditableSelect(
-    date[1].toString(),
-    Object.keys(MONTHS),
-    Object.values(MONTHS)
-  );
-  const [editableDay, day, resetDay] = useEditableSelect(
-    date[2].toString(),
-    DAYS
+  const [editableBirthDate, birthDate, resetBirthDate] = useEditableDate(
+    user.birthDate
   );
 
   const [editableWorks, works, resetWorks, addWork, deleteWork] =
     useEditableSections(user.works);
 
   const handleSave = () => {
-    const birthDate = new Date(parseInt(year), parseInt(month), parseInt(day));
-    console.log(birthDate);
-
     if (onSave) {
       onSave({
         firstName,
@@ -113,6 +96,7 @@ const UserResume = ({
         educations,
         works,
         birthDate,
+        birthPlace,
       });
       dispatchAlert("Changes saved successfully", "success");
       setEditting(false);
@@ -145,9 +129,8 @@ const UserResume = ({
     resetInterests();
     resetEducations();
     resetWorks();
-    resetDay();
-    resetMonth();
-    resetYear();
+    resetBirthDate();
+    resetBirthPlace();
   };
 
   const renderDeleteSection = (deleteFunction: (index: number) => void) => {
@@ -229,22 +212,17 @@ const UserResume = ({
         <div>
           <InfoTable white title="ABOUT ME">
             <InfoItem>
-              <span className={css["label-date"]}>Date of birth:</span>
+              <span className={css["label"]}>Date of birth:</span>
               <div className={css["user-date"]}>
-                {!editting ? (
-                  <>{formatDate(user.birthDate)}</>
-                ) : (
-                  <>
-                    {editableMonth(editting)}
-                    {editableDay(editting)}
-                    {editableYear(editting)}
-                  </>
-                )}
+                {editableBirthDate(editting)}
               </div>
             </InfoItem>
             <InfoItem>Age: {calculateAge(user.birthDate).toString()}</InfoItem>
             <InfoItem>Gender: {editableGender(editting)}</InfoItem>
-            <InfoItem>Birth place: Brasilia, Brazil </InfoItem>
+            <InfoItem>
+              <span className={css["label"]}>Birth place:</span>
+              {editableBirthPlace(editting)}
+            </InfoItem>
           </InfoTable>
 
           <InfoTable white title="CONTACT">

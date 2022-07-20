@@ -25,6 +25,7 @@ model User {
   phone String?
   gender Gender @default(NONE)
   birthDate DateTime?
+  birthPlace String?
   address String?
   title String?
   careerObjective String?
