@@ -1,11 +1,11 @@
 @use "../../styles/abstracts/theme" as t;
 
 .resume {
-  padding: 2rem;
   width: 1200px;
   display: grid;
   justify-content: center;
   grid-template-columns: 350px 1fr min-content;
+  border: 1px solid black;
 }
 
 .left-side {

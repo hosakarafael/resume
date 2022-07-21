@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import css from "./UserResume.module.scss";
 import Image from "next/image";
 import { Gender, User } from "@prisma/client";
@@ -7,6 +7,7 @@ import DivWithToolTip from "../ToolTip/DivWithToolTip";
 import {
   faCheck,
   faEnvelope,
+  faFilePdf,
   faLocationDot,
   faPen,
   faPhone,
@@ -23,6 +24,8 @@ import { useEditableCollection } from "../../hook/useEditableCollection";
 import { useEditableSections } from "../../hook/useEditableSections";
 import { calculateAge } from "../../utils/dateUtils";
 import { useEditableDate } from "../../hook/useEditableDate";
+import generatePDF from "../GeneratePDF/GeneratePDF";
+import { fullName } from "../../models/UserEntity";
 
 interface UserResumeProps {
   user: User;
@@ -80,6 +83,8 @@ const UserResume = ({
 
   const [editableWorks, works, resetWorks, addWork, deleteWork] =
     useEditableSections(user.works);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleSave = () => {
     if (onSave) {
@@ -161,7 +166,7 @@ const UserResume = ({
   };
 
   return (
-    <div className={css["resume"]}>
+    <div ref={ref} className={css["resume"]}>
       {alert}
       <div className={css["left-side"]}>
         <div className={css["left-header"]}>
@@ -173,7 +178,17 @@ const UserResume = ({
             layout={"fixed"}
           />
           {editable && (
-            <div className={css["btn-area"]}>
+            <div className={`${css["btn-area"]}`}>
+              <DivWithToolTip
+                onClick={() => generatePDF(ref, `${fullName(user)}`)}
+                tooltipLabel="Download as PDF"
+              >
+                <FontAwesomeIcon
+                  className={css["edit-btn"]}
+                  icon={faFilePdf}
+                  size={"2x"}
+                />
+              </DivWithToolTip>
               {editting ? (
                 <>
                   <DivWithToolTip
