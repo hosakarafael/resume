@@ -24,7 +24,7 @@ import { useEditableCollection } from "../../hook/useEditableCollection";
 import { useEditableSections } from "../../hook/useEditableSections";
 import { calculateAge } from "../../utils/dateUtils";
 import { useEditableDate } from "../../hook/useEditableDate";
-import generatePDF from "../GeneratePDF/GeneratePDF";
+import generatePDF from "../GeneratePDF/generatePDF";
 import { fullName } from "../../models/UserEntity";
 
 interface UserResumeProps {
