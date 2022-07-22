@@ -15,6 +15,9 @@ export function useEditableText(
 
   const reset = () => {
     setText(value ? value : "");
+    if (value && ref.current?.innerText != undefined) {
+      ref.current.innerText = value;
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLDivElement>) => {
@@ -29,7 +32,7 @@ export function useEditableText(
           ref={ref}
           suppressContentEditableWarning
           onInput={handleChange}
-          className={editable ? css["editable"] : ""}
+          className={editable ? css["editable"] : "uneditable"}
           contentEditable={editable}
         ></span>
       </div>

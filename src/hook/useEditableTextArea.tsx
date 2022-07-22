@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import css from "./styles/useEditable.module.scss";
 
 export function useEditableTextArea(
   value: string | null
 ): [(editable: boolean) => JSX.Element, string, () => void] {
   const [text, setText] = useState(value ? value : "");
+
+  const ref = useCallback(
+    (node: HTMLTextAreaElement) => {
+      if (node !== null) {
+        return textAreaAdjust(node);
+      }
+    },
+    [text]
+  );
 
   function textAreaAdjust(element: HTMLTextAreaElement) {
     element.style.height = "1px";
@@ -17,14 +26,13 @@ export function useEditableTextArea(
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
-    textAreaAdjust(e.currentTarget);
     setText(e.currentTarget.value);
   };
 
   const getEditableField = () => {
     return (
       <textarea
-        id="editable_textarea"
+        ref={ref}
         value={text}
         onChange={handleChange}
         className={css["editable"]}

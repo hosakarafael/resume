@@ -1,5 +1,5 @@
 import { Section } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InfoItem from "../components/InfoTable/InfoItem";
 import css from "./styles/useEditable.module.scss";
 
@@ -50,7 +50,6 @@ export function useEditableSections(
     copy[index].description = e.target.value;
 
     setSections(copy);
-    textAreaAdjust(e.currentTarget);
   };
 
   const getEditableField = (index: number) => {
@@ -68,7 +67,7 @@ export function useEditableSections(
         </div>
         <InfoItem>
           <textarea
-            id="editable_textarea"
+            ref={ref}
             value={
               sections[index].description ? sections[index].description! : ""
             }
@@ -102,6 +101,15 @@ export function useEditableSections(
   );
   const [sections, setSections] = useState<Section[]>(
     JSON.parse(JSON.stringify(array))
+  );
+
+  const ref = useCallback(
+    (node: HTMLTextAreaElement) => {
+      if (node !== null) {
+        return textAreaAdjust(node);
+      }
+    },
+    [sections]
   );
 
   useEffect(() => {

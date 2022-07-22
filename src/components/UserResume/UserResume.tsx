@@ -26,6 +26,7 @@ import { calculateAge } from "../../utils/dateUtils";
 import { useEditableDate } from "../../hook/useEditableDate";
 import generatePDF from "../GeneratePDF/generatePDF";
 import { fullName } from "../../models/UserEntity";
+import { textfit } from "../../utils/textUtils";
 
 interface UserResumeProps {
   user: User;
@@ -42,12 +43,9 @@ const UserResume = ({
   const [editting, setEditting] = useState(false);
   const [alert, dispatchAlert] = useAlert();
 
-  const [editableFirstName, firstName, resetFirstName] = useEditableText(
-    user.firstName
-  );
-  const [editableLastName, lastName, resetLastName] = useEditableText(
-    user.lastName
-  );
+  const [editableName, name, resetName] = useEditableText(fullName(user));
+  textfit("user-name");
+
   const [editablePhone, phone, resetPhone] = useEditableText(user.phone);
   const [editableGender, gender, resetGender] = useEditableSelect(
     user.gender,
@@ -87,10 +85,12 @@ const UserResume = ({
   const ref = useRef<HTMLDivElement>(null);
 
   const handleSave = () => {
+    const names = name.split(" ");
+
     if (onSave) {
       onSave({
-        firstName,
-        lastName,
+        firstName: names[0],
+        lastName: names[1],
         address,
         title,
         phone,
@@ -123,8 +123,7 @@ const UserResume = ({
   };
 
   const reset = () => {
-    resetFirstName();
-    resetLastName();
+    resetName();
     resetPhone();
     resetTitle();
     resetGender();
@@ -170,13 +169,15 @@ const UserResume = ({
       {alert}
       <div className={css["left-side"]}>
         <div className={css["left-header"]}>
-          <Image
-            className={css["user-image"]}
-            src={imageUrl}
-            width={250}
-            height={250}
-            layout={"fixed"}
-          />
+          <div className={css["user-image__container"]}>
+            <Image
+              className={css["user-image"]}
+              src={imageUrl}
+              width={350}
+              height={350}
+              layout={"fixed"}
+            />
+          </div>
           {editable && (
             <div className={`${css["btn-area"]}`}>
               <DivWithToolTip
@@ -267,9 +268,8 @@ const UserResume = ({
 
       <div className={css["right-side"]}>
         <div className={css["right-header"]}>
-          <div className={`${css["user-name"]}`}>
-            {editableFirstName(editting)}
-            {editableLastName(editting)}
+          <div id="user-name" className={`${css["user-name"]}`}>
+            {editableName(editting)}
           </div>
 
           <div className={css["title"]}>

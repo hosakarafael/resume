@@ -2,18 +2,12 @@ import React, { useEffect, useState } from "react";
 import css from "./styles/useEditable.module.scss";
 
 export function useEditableCollection(
-  array: string[],
-  textarea = false
+  array: string[]
 ): [
   ((index: number, editable: boolean) => JSX.Element)[],
   string[],
   () => void
 ] {
-  function textAreaAdjust(element: HTMLTextAreaElement) {
-    element.style.height = "1px";
-    element.style.height = 25 + element.scrollHeight + "px";
-  }
-
   const reset = () => {
     setTexts(array);
   };
@@ -26,20 +20,10 @@ export function useEditableCollection(
     let copy = [...texts];
     copy[index] = e.target.value;
     setTexts(copy);
-    if (e.currentTarget instanceof HTMLTextAreaElement) {
-      textAreaAdjust(e.currentTarget);
-    }
   };
 
   const getEditableField = (index: number) => {
-    return textarea ? (
-      <textarea
-        id="editable_textarea"
-        value={texts[index]}
-        onChange={(e) => handleChange(index, e)}
-        className={css["editable"]}
-      />
-    ) : (
+    return (
       <input
         type="text"
         value={texts[index]}

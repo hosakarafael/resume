@@ -1,10 +1,10 @@
 @use "../../styles/abstracts/theme" as t;
 
 .resume {
-  width: 1200px;
+  height: 2480px;
   display: grid;
   justify-content: center;
-  grid-template-columns: 350px 1fr min-content;
+  grid-template-columns: 484px 1131px;
   border: 1px solid black;
 }
 
@@ -12,7 +12,6 @@
   background-color: t.$light-primary-color;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 4rem 2rem;
   gap: 10rem;
 }
@@ -23,6 +22,11 @@
   gap: 20px;
 }
 
+.user-image__container {
+  display: flex;
+  justify-content: center;
+}
+
 .user-image {
   border-radius: 30px;
   margin-bottom: 2rem;
@@ -30,6 +34,7 @@
 
 .btn-area {
   display: flex;
+  justify-content: center;
   gap: 15px;
 }
 
@@ -66,14 +71,13 @@
 }
 
 .user-name {
-  font-weight: 300;
-  line-height: 10rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
   padding: 1rem;
   margin-bottom: 1rem;
   gap: 20px;
-  text-align: justify;
-  font-size: max(5vw, 10rem);
   white-space: nowrap;
 }
 
@@ -91,7 +95,7 @@
     background-color: white;
     padding: 0 5px;
     font-weight: 800;
-    font-size: 2rem;
+    font-size: 3.5rem;
     white-space: nowrap;
   }
 }
@@ -101,7 +105,6 @@
   border-bottom: 5px solid #000;
   border-top: 5px solid black;
   height: 0;
-  width: 100%;
 }
 
 .delete-btn__container {

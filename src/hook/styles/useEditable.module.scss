@@ -2,6 +2,7 @@
 
 .editable-text__container {
   width: 100%;
+  height: inherit;
 
   .editable {
     outline: 0;
@@ -11,10 +12,15 @@
     border-radius: 10px;
   }
 
+  span {
+    display: flex;
+    align-items: center;
+    height: inherit;
+  }
+
   span.editable {
     width: 100%;
     min-width: 100px;
-    display: inline-block;
   }
 
   input.editable {
@@ -32,6 +38,7 @@
 
   .uneditable {
     white-space: pre-wrap;
+    height: inherit;
   }
 
   .title {
