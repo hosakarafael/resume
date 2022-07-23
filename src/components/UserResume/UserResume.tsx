@@ -179,17 +179,7 @@ const UserResume = ({
             />
           </div>
           {editable && (
-            <div className={`${css["btn-area"]}`}>
-              <DivWithToolTip
-                onClick={() => generatePDF(ref, `${fullName(user)}`)}
-                tooltipLabel="Download as PDF"
-              >
-                <FontAwesomeIcon
-                  className={css["edit-btn"]}
-                  icon={faFilePdf}
-                  size={"2x"}
-                />
-              </DivWithToolTip>
+            <div className={`${css["btn-area"]} ignorePDF`}>
               {editting ? (
                 <>
                   <DivWithToolTip
@@ -214,13 +204,30 @@ const UserResume = ({
                   </DivWithToolTip>
                 </>
               ) : (
-                <DivWithToolTip onClick={handleEdit} tooltipLabel="Edit resume">
-                  <FontAwesomeIcon
-                    className={css["edit-btn"]}
-                    icon={faPen}
-                    size={"2x"}
-                  />
-                </DivWithToolTip>
+                <>
+                  <DivWithToolTip
+                    onClick={() =>
+                      generatePDF(ref.current!, `${fullName(user)}`)
+                    }
+                    tooltipLabel="Download as PDF"
+                  >
+                    <FontAwesomeIcon
+                      className={css["edit-btn"]}
+                      icon={faFilePdf}
+                      size={"2x"}
+                    />
+                  </DivWithToolTip>
+                  <DivWithToolTip
+                    onClick={handleEdit}
+                    tooltipLabel="Edit resume"
+                  >
+                    <FontAwesomeIcon
+                      className={css["edit-btn"]}
+                      icon={faPen}
+                      size={"2x"}
+                    />
+                  </DivWithToolTip>
+                </>
               )}
             </div>
           )}

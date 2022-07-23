@@ -1,13 +1,14 @@
-import React from "react";
 import { jsPDF } from "jspdf";
 import { toCanvas } from "html-to-image";
 
-const generatePDF = async (
-  html: React.RefObject<HTMLDivElement>,
-  fileName: string
-) => {
-  const image = await toCanvas(html.current!, {
+const generatePDF = async (html: HTMLDivElement, fileName: string) => {
+  function filter(node: HTMLElement) {
+    return !node.classList?.contains("ignorePDF");
+  }
+
+  const image = await toCanvas(html, {
     quality: 0.2,
+    filter: filter,
   });
   const pdf = new jsPDF("portrait", "px", "a4");
   const imgProps = pdf.getImageProperties(image);

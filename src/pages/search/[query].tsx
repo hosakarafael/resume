@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps<SearchPageProps> = async (
   const query = context.query.query as string;
 
   const prisma = new PrismaClient();
-  const users = await prisma.user.findMany({
+  const result = await prisma.user.findMany({
     where: {
       OR: [
         { firstName: { contains: query, mode: "insensitive" } },
@@ -40,6 +40,8 @@ export const getServerSideProps: GetServerSideProps<SearchPageProps> = async (
       ],
     },
   });
+
+  const users = JSON.parse(JSON.stringify(result));
 
   return { props: { users, query } };
 };
