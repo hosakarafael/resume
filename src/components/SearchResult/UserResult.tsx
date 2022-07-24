@@ -1,4 +1,7 @@
-import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAddressCard,
+  faImagePortrait,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -8,6 +11,7 @@ import { fullName } from "../../models/UserEntity";
 import getAxios from "../../utils/getAxios";
 import Spinner from "../Spinner/Spinner";
 import Image from "next/image";
+import DivWithToolTip from "../ToolTip/DivWithToolTip";
 
 interface UserResultProps {
   user: User;
@@ -35,17 +39,35 @@ const UserResult = ({ user }: UserResultProps) => {
             height={80}
           />
         </Spinner>
-        <span className={css["result-name"]}>{fullName(user)}</span>
+        <div className={css["name__container"]}>
+          <span className={css["result-name"]}>{fullName(user)}</span>
+          <span>{user.title}</span>
+        </div>
       </div>
-      <Link href={`/profile/${user.id}`}>
-        <a className={`btn btn--primary`}>
-          <FontAwesomeIcon
-            icon={faAddressCard}
-            size={"2x"}
-            className={css["profile-btn"]}
-          />
-        </a>
-      </Link>
+      <div className={css["btn-area"]}>
+        <DivWithToolTip tooltipLabel="Show Card">
+          <Link href={`/profile/${user.id}`}>
+            <a className={`btn btn--primary`}>
+              <FontAwesomeIcon
+                icon={faAddressCard}
+                size={"2x"}
+                className={css["profile-btn"]}
+              />
+            </a>
+          </Link>
+        </DivWithToolTip>
+        <DivWithToolTip tooltipLabel="Show Resume">
+          <Link href={`/profile/${user.id}/detail`}>
+            <a className={`btn btn--primary`}>
+              <FontAwesomeIcon
+                icon={faImagePortrait}
+                size={"2x"}
+                className={css["profile-btn"]}
+              />
+            </a>
+          </Link>
+        </DivWithToolTip>
+      </div>
     </div>
   );
 };

@@ -8,19 +8,14 @@ import {
   faArrowRightFromBracket,
   faIdCard,
   faImagePortrait,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import NavLinkWithToolTip from "../ToolTip/NavLinkWithToolTip";
 import { useUserContext } from "../../context/userContext";
-import Router from "next/router";
-import SearchBar from "../SearchBar/SearchBar";
 
 const NavBar = () => {
   const { user: currentUser } = useUserContext();
-
-  const handleSubmit = (query: string) => {
-    Router.push(`/search/${query}`);
-  };
 
   return (
     <nav className={css["navbar"]}>
@@ -30,7 +25,19 @@ const NavBar = () => {
             <Image src={"/images/resume.png"} width={60} height={60} />
           </a>
         </Link>
-        <SearchBar onSubmit={handleSubmit} expandable placeHolder="Search..." />
+        <NavLinkWithToolTip
+          tooltipLabel={`Search`}
+          activeClass={css["active"]}
+          className={css["nav-item"]}
+          to={`/search`}
+          exact={false}
+          query={{ f: "name", q: "" }}
+        >
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            className={css["nav-icon"]}
+          />
+        </NavLinkWithToolTip>
       </div>
       <div className={css["nav-right"]}>
         <NavLinkWithToolTip

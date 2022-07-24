@@ -78,6 +78,25 @@ abstract class BaseUserService {
   delete(id: string) {
     return this.prisma.user.delete({ where: { id } });
   }
+
+  findByFirstORlastName(name: string) {
+    return this.prisma.user.findMany({
+      where: {
+        OR: [
+          { firstName: { contains: name, mode: "insensitive" } },
+          { lastName: { contains: name, mode: "insensitive" } },
+        ],
+      },
+    });
+  }
+
+  findByTitle(title: string) {
+    return this.prisma.user.findMany({
+      where: {
+        title: { contains: title, mode: "insensitive" },
+      },
+    });
+  }
 }
 
 class UserAllDataService extends BaseUserService {

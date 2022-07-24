@@ -26,12 +26,24 @@
   height: 80px;
 }
 
+.name__container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
+}
+
 .result-name {
   font-weight: 700;
   font-size: 2rem;
-  margin: 0 1rem;
 }
 
 .profile-btn {
   justify-self: flex-end;
+  width: 30px;
+  height: 30px;
+}
+
+.btn-area {
+  display: flex;
+  gap: 10px;
 }

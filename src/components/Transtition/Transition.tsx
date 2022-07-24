@@ -8,7 +8,8 @@ interface TransitionProps {
 }
 
 const Transition = ({ children }: TransitionProps) => {
-  const { asPath } = useRouter();
+  const { pathname } = useRouter();
+  console.log(pathname);
 
   const routeChange = () => {
     const tempFix = () => {
@@ -26,7 +27,7 @@ const Transition = ({ children }: TransitionProps) => {
   return (
     <AnimatePresence initial={false} exitBeforeEnter>
       <motion.div
-        key={asPath}
+        key={pathname}
         initial={{ x: -1000, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 1000, opacity: 0 }}
