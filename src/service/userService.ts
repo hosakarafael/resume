@@ -10,6 +10,7 @@ interface UserSelector {
   fileName: boolean;
   phone: boolean;
   birthDate: boolean;
+  age: boolean;
   birthPlace: boolean;
   gender: boolean;
   title: boolean;
@@ -30,6 +31,7 @@ const commonSelector = {
   phone: true,
   gender: true,
   birthDate: true,
+  age: true,
   birthPlace: true,
   title: true,
   address: true,
@@ -39,6 +41,10 @@ const commonSelector = {
   educations: true,
   works: true,
 };
+
+export interface AgeFilterInterface {
+  age?: { gt?: number; gte?: number; lt?: number; lte?: number };
+}
 
 abstract class BaseUserService {
   protected prisma;
@@ -79,21 +85,23 @@ abstract class BaseUserService {
     return this.prisma.user.delete({ where: { id } });
   }
 
-  findByFirstORlastName(name: string) {
+  findByFirstORlastName(name: string, filter?: AgeFilterInterface) {
     return this.prisma.user.findMany({
       where: {
         OR: [
           { firstName: { contains: name, mode: "insensitive" } },
           { lastName: { contains: name, mode: "insensitive" } },
         ],
+        AND: filter,
       },
     });
   }
 
-  findByTitle(title: string) {
+  findByTitle(title: string, filter?: AgeFilterInterface) {
     return this.prisma.user.findMany({
       where: {
-        title: { contains: title, mode: "insensitive" },
+        OR: [{ title: { contains: title, mode: "insensitive" } }],
+        AND: filter,
       },
     });
   }

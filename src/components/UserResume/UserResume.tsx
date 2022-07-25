@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import css from "./UserResume.module.scss";
 import Image from "next/image";
 import { Gender, User } from "@prisma/client";
@@ -78,11 +78,16 @@ const UserResume = ({
   const [editableBirthDate, birthDate, resetBirthDate] = useEditableDate(
     user.birthDate
   );
+  const [age, setAge] = useState(user.age);
 
   const [editableWorks, works, resetWorks, addWork, deleteWork] =
     useEditableSections(user.works);
 
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setAge(calculateAge(birthDate));
+  }, [birthDate]);
 
   const handleSave = () => {
     const names = name.split(" ");
@@ -101,6 +106,7 @@ const UserResume = ({
         educations,
         works,
         birthDate,
+        age,
         birthPlace,
       });
       dispatchAlert("Changes saved successfully", "success");
@@ -240,7 +246,7 @@ const UserResume = ({
                 {editableBirthDate(editting)}
               </div>
             </InfoItem>
-            <InfoItem>Age: {calculateAge(user.birthDate).toString()}</InfoItem>
+            <InfoItem>Age: {age?.toString()}</InfoItem>
             <InfoItem>Gender: {editableGender(editting)}</InfoItem>
             <InfoItem>
               <span className={css["label"]}>Birth place:</span>

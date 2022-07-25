@@ -58,7 +58,7 @@ export function splitDate(date: Date | null) {
 
 export function calculateAge(date: Date | string | null) {
   if (!date) {
-    return "";
+    return 0;
   }
 
   const now = new Date();

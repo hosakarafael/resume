@@ -1,70 +1,124 @@
-import React from "react";
+import React, { useState } from "react";
 import css from "./search.module.scss";
 import ResultList from "../../components/SearchResult/ResultList";
 import { User } from "@prisma/client";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useRouter } from "next/router";
-import { UserPersonalDataService } from "../../service/userService";
+import {
+  AgeFilterInterface,
+  UserPersonalDataService,
+} from "../../service/userService";
 import { GetServerSideProps } from "next";
+import _ from "lodash";
 
 interface SearchPageProps {
   users: User[];
-  query: string;
-  filter: string;
+  q: string;
+  f: string;
+  minA?: string;
+  maxA?: string;
 }
 
-const SearchPage = ({ users, query, filter }: SearchPageProps) => {
+const SearchPage = ({ users, q, f, minA, maxA }: SearchPageProps) => {
   const router = useRouter();
+  const filterOptions = ["name", "title"];
+  const [query, setQuery] = useState(q);
+  const [filter, setFilter] = useState(f);
+  const [minAge, setMinAge] = useState(minA);
+  const [maxAge, setMaxAge] = useState(maxA);
 
   const handleSearch = (searchedQuery: string | undefined) => {
-    if (searchedQuery !== query) {
-      router.push(`/search?f=${filter}&q=${searchedQuery}`);
-    }
+    setQuery(searchedQuery ?? "");
   };
 
-  const handleFilter = (selectedFilter: string) => {
-    if (selectedFilter !== filter) {
-      router.push(`/search?f=${selectedFilter}&q=${query}`);
+  const handleFilterSelected = (selectedFilter: string) => {
+    setFilter(selectedFilter ?? "");
+  };
+
+  const applyFilter = () => {
+    let url = `/search?f=${filter}&q=${query}`;
+    if (minAge) {
+      url += `&minA=${minAge}`;
     }
+    if (maxAge) {
+      url += `&maxA=${maxAge}`;
+    }
+    router.push(url);
+  };
+
+  const getSelectableFilter = () => {
+    return (
+      <ul className={css["filter-options"]}>
+        {filterOptions.map((option) => (
+          <li
+            onClick={() => handleFilterSelected(option)}
+            className={
+              filter === option
+                ? `${css["active"]} ${css["filter-option"]}`
+                : css["filter-option"]
+            }
+          >
+            {_.upperFirst(option)}
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   return (
     <div className={css["search__container"]}>
       <div className={css["filter"]}>
-        <h1 className={css["filter-header"]}>Filter</h1>
-        <ul className={css["filter-options"]}>
-          <li
-            onClick={() => handleFilter("name")}
-            className={
-              filter === "name"
-                ? `${css["active"]} ${css["filter-option"]}`
-                : css["filter-option"]
-            }
+        <div>
+          <h1 className={css["filter-header"]}>Filter</h1>
+          {getSelectableFilter()}
+          <div className={css["filter-age"]}>
+            <span>Min Age</span>
+            <span>Max age</span>
+            <select
+              value={minAge}
+              onChange={(e) => setMinAge(e.currentTarget.value)}
+              className="form-select"
+            >
+              <option value=""></option>
+              {[...Array(10).keys()].map((index) => (
+                <option value={(index + 1) * 10}>{(index + 1) * 10}</option>
+              ))}
+            </select>
+            <select
+              value={maxAge}
+              onChange={(e) => setMaxAge(e.currentTarget.value)}
+              className="form-select"
+            >
+              <option value=""></option>
+              {[...Array(10).keys()].map((index) => (
+                <option value={(index + 1) * 10}>{(index + 1) * 10}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className={css["filter-btn__container"]}>
+          <button
+            onClick={applyFilter}
+            className="btn btn--primary btn--stretched"
           >
-            Name
-          </li>
-          <li
-            onClick={() => handleFilter("title")}
-            className={
-              filter === "title"
-                ? `${css["active"]} ${css["filter-option"]}`
-                : css["filter-option"]
-            }
-          >
-            Title
-          </li>
-        </ul>
+            Apply filter
+          </button>
+        </div>
       </div>
       <div className={css["search"]}>
         <div className={css["searchbar"]}>
-          <SearchBar onSubmit={handleSearch} placeHolder="Search..." />
+          <SearchBar
+            onSubmit={applyFilter}
+            onChange={handleSearch}
+            placeHolder="Search..."
+          />
         </div>
         {users.length > 0 ? (
           <ResultList users={users} />
-        ) : query === "" ? (
+        ) : q === "" ? (
           <></>
         ) : (
-          <h1 className={css["no-result"]}>No result found for : {query}</h1>
+          <h1 className={css["no-result"]}>No result found</h1>
         )}
       </div>
     </div>
@@ -76,22 +130,44 @@ export const getServerSideProps: GetServerSideProps<SearchPageProps> = async (
 ) => {
   const query = context.query.q as string;
   const filter = context.query.f as string;
+  const minAge = context.query.minA as string;
+  const maxAge = context.query.maxA as string;
+
   let result: User[] = [];
 
+  let ageFilter: AgeFilterInterface = {};
+
   if (query) {
+    if (minAge) {
+      ageFilter.age = { gte: parseInt(minAge) };
+    }
+    if (maxAge) {
+      ageFilter.age = { lte: parseInt(maxAge) };
+    }
     switch (filter) {
       case "name":
-        result = await UserPersonalDataService.findByFirstORlastName(query);
+        result = await UserPersonalDataService.findByFirstORlastName(
+          query,
+          ageFilter
+        );
         break;
       case "title":
-        result = await UserPersonalDataService.findByTitle(query);
+        result = await UserPersonalDataService.findByTitle(query, ageFilter);
         break;
     }
   }
 
   const users: User[] = JSON.parse(JSON.stringify(result));
 
-  return { props: { users, query, filter } };
+  return {
+    props: {
+      users,
+      q: query,
+      f: filter,
+      minA: minAge ?? "",
+      maxA: maxAge ?? "",
+    },
+  };
 };
 
 export default SearchPage;

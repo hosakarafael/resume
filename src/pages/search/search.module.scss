@@ -13,6 +13,9 @@
   border-radius: 10px 0 0 10px;
   border-right: 2px solid t.$light-secondary-color;
   flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .filter-header {
@@ -68,6 +71,15 @@
     background-color: t.$light-primary-color;
     color: t.$light-secondary-bgcolor;
   }
+}
+
+.filter-age {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.filter-btn__container {
+  position: relative;
 }
 
 .search {

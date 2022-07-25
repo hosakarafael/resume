@@ -25,6 +25,7 @@ model User {
   phone String?
   gender Gender @default(NONE)
   birthDate DateTime?
+  age Int @default(0)
   birthPlace String?
   address String?
   title String?
