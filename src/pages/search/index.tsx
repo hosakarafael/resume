@@ -51,6 +51,7 @@ const SearchPage = ({ users, q, f, minA, maxA }: SearchPageProps) => {
       <ul className={css["filter-options"]}>
         {filterOptions.map((option) => (
           <li
+            key={option}
             onClick={() => handleFilterSelected(option)}
             className={
               filter === option
@@ -79,9 +80,11 @@ const SearchPage = ({ users, q, f, minA, maxA }: SearchPageProps) => {
               onChange={(e) => setMinAge(e.currentTarget.value)}
               className="form-select"
             >
-              <option value=""></option>
+              <option key="" value=""></option>
               {[...Array(10).keys()].map((index) => (
-                <option value={(index + 1) * 10}>{(index + 1) * 10}</option>
+                <option key={(index + 1) * 10} value={(index + 1) * 10}>
+                  {(index + 1) * 10}
+                </option>
               ))}
             </select>
             <select
@@ -89,9 +92,11 @@ const SearchPage = ({ users, q, f, minA, maxA }: SearchPageProps) => {
               onChange={(e) => setMaxAge(e.currentTarget.value)}
               className="form-select"
             >
-              <option value=""></option>
+              <option key="" value=""></option>
               {[...Array(10).keys()].map((index) => (
-                <option value={(index + 1) * 10}>{(index + 1) * 10}</option>
+                <option key={(index + 1) * 10} value={(index + 1) * 10}>
+                  {(index + 1) * 10}
+                </option>
               ))}
             </select>
           </div>

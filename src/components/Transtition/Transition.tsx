@@ -9,7 +9,6 @@ interface TransitionProps {
 
 const Transition = ({ children }: TransitionProps) => {
   const { pathname } = useRouter();
-  console.log(pathname);
 
   const routeChange = () => {
     const tempFix = () => {
