@@ -20,7 +20,7 @@ export function useEditableText(
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLDivElement>) => {
+  const handleChange = (e: React.FormEvent<HTMLSpanElement>) => {
     e.preventDefault();
     setText(e.currentTarget.innerText);
   };

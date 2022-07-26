@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import css from "./styles/useEditable.module.scss";
 
 export function useEditableCollection(
@@ -8,35 +8,29 @@ export function useEditableCollection(
   string[],
   () => void
 ] {
+  const refs = useRef<any>([]);
+
   const reset = () => {
     setTexts(array);
   };
 
-  const handleChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (index: number, e: React.FormEvent<HTMLSpanElement>) => {
     e.preventDefault();
     let copy = [...texts];
-    copy[index] = e.target.value;
+    copy[index] = e.currentTarget.innerText;
     setTexts(copy);
-  };
-
-  const getEditableField = (index: number) => {
-    return (
-      <input
-        type="text"
-        value={texts[index]}
-        onChange={(e) => handleChange(index, e)}
-        className={css["editable"]}
-      />
-    );
   };
 
   const renderEditableField = (index: number, editable: boolean) => {
     return (
       <div className={css["editable-text__container"]}>
-        {editable ? getEditableField(index) : <span>{texts[index]}</span>}
+        <span
+          ref={(e) => (refs.current[index] = e)}
+          suppressContentEditableWarning
+          onInput={(e) => handleChange(index, e)}
+          className={editable ? css["editable"] : "uneditable"}
+          contentEditable={editable}
+        ></span>
       </div>
     );
   };
@@ -44,7 +38,16 @@ export function useEditableCollection(
   const [editableCollection, setEditableCollection] = React.useState(() =>
     array.map(() => renderEditableField)
   );
+
   const [texts, setTexts] = useState(array);
+
+  useEffect(() => {
+    array.map((item, i) => {
+      if (refs.current) {
+        refs.current[i].innerText = item;
+      }
+    });
+  }, []);
 
   useEffect(() => {
     setEditableCollection(() => texts.map(() => renderEditableField));

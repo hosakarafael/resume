@@ -140,15 +140,19 @@ export const getServerSideProps: GetServerSideProps<SearchPageProps> = async (
 
   let result: User[] = [];
 
-  let ageFilter: AgeFilterInterface = {};
+  const ageFilter: AgeFilterInterface = {};
 
   if (query) {
-    if (minAge) {
-      ageFilter.age = { gte: parseInt(minAge) };
+    if (minAge || maxAge) {
+      ageFilter.age = {};
+      if (minAge) {
+        ageFilter.age.gte = parseInt(minAge);
+      }
+      if (maxAge) {
+        ageFilter.age.lte = parseInt(maxAge);
+      }
     }
-    if (maxAge) {
-      ageFilter.age = { lte: parseInt(maxAge) };
-    }
+
     switch (filter) {
       case "name":
         result = await UserPersonalDataService.findByFirstORlastName(
