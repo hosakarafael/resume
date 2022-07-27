@@ -256,12 +256,16 @@ const UserResume = ({
 
           <InfoTable white title="CONTACT">
             <InfoItem>
-              <FontAwesomeIcon icon={faLocationDot} size={"lg"} />
-              {editableAddress(editting)}
+              {address || editting ? (
+                <FontAwesomeIcon icon={faLocationDot} size={"lg"} />
+              ) : (
+                <></>
+              )}
+              {editableAddress(editting, "Address")}
             </InfoItem>
             <InfoItem>
-              <FontAwesomeIcon icon={faPhone} />
-              {editablePhone(editting)}
+              {phone || editting ? <FontAwesomeIcon icon={faPhone} /> : <></>}
+              {editablePhone(editting, "Phone")}
             </InfoItem>
             <InfoItem>
               <FontAwesomeIcon icon={faEnvelope} />

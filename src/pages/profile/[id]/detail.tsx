@@ -4,7 +4,6 @@ import { User } from "@prisma/client";
 import { UserPersonalDataService } from "../../../service/userService";
 import css from "./detail.module.scss";
 import { getUserImage } from "../../../models/UserEntity";
-import { isAuthenticatedRequest } from "../../../utils/securityUtils";
 import { REDIRECT_REQUEST_LOGOUT } from "../../logout/index";
 import UserResume from "../../../components/UserResume/UserResume";
 import { useUserContext } from "../../../context/userContext";
@@ -41,11 +40,13 @@ const UserDetail = ({ user, imageUrl }: UserDetailProps) => {
 export const getServerSideProps: GetServerSideProps<UserDetailProps> = async (
   context
 ) => {
-  if (!isAuthenticatedRequest(context.req)) {
+  const id = context.query.id as string;
+
+  if (id === "undefined") {
+    console.log(id);
     return REDIRECT_REQUEST_LOGOUT;
   }
 
-  const id = context.query.id as string;
   const result = await UserPersonalDataService.findById(id);
   const user = JSON.parse(JSON.stringify(result));
 

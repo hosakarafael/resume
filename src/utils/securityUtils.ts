@@ -34,9 +34,13 @@ export const authenticatedAPI =
     });
   };
 
+export const decodeJWT = (jwt: string) => {
+  return decode(jwt);
+};
+
 const isValidJWT = (jwt: string) => {
   var flag = false;
-  const decodedJWT = decode(jwt);
+  const decodedJWT = decodeJWT(jwt);
   if (!decodedJWT || isTokenExpired(decodedJWT)) {
     return false;
   }

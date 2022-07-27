@@ -6,7 +6,6 @@ import { useUserContext } from "../../../context/userContext";
 import { getUserImage } from "../../../models/UserEntity";
 import { UserPersonalDataService } from "../../../service/userService";
 import css from "./profile.module.scss";
-import { isAuthenticatedRequest } from "../../../utils/securityUtils";
 import { REDIRECT_REQUEST_LOGOUT } from "../../logout/index";
 
 interface ProfileProps {
@@ -33,10 +32,12 @@ const Profile = ({ user, imageUrl }: ProfileProps) => {
 export const getServerSideProps: GetServerSideProps<ProfileProps | {}> = async (
   context
 ) => {
-  if (!isAuthenticatedRequest(context.req)) {
+  const id = context.query.id as string;
+
+  if (id === "undefined") {
+    console.log(id);
     return REDIRECT_REQUEST_LOGOUT;
   }
-  const id = context.query.id as string;
 
   const result = await UserPersonalDataService.findById(id);
 

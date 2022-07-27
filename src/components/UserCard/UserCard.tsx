@@ -1,13 +1,17 @@
 import {
   faCamera,
   faCircleInfo,
+  faEnvelope,
+  faLocationDot,
   faPen,
+  faPhone,
+  faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@prisma/client";
 import axios from "axios";
 import Router from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { fullName } from "../../models/UserEntity";
 import getAxios from "../../utils/getAxios";
 
@@ -23,6 +27,8 @@ interface UserCardProps {
 }
 
 const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
+  const [flipped, setFlipped] = useState(false);
+
   const handleUpload = async (e: React.FormEvent) => {
     const element = e.target;
 
@@ -40,100 +46,148 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
     }
   };
 
-  return (
-    <div className={css["card__container"]}>
-      <div className={css["card"]}>
-        <div className={css["image__container"]}>
-          {editable && (
-            <label
-              className={css["edit-image__container"]}
-              htmlFor="upload-photo"
-            >
-              <DivWithToolTip
-                className={css["edit-image"]}
-                tooltipLabel="Change photo"
+  const handleFlip = () => {
+    setFlipped((prev) => !prev);
+  };
+
+  const getFrontCard = () => {
+    return (
+      <>
+        <div className={css["front-card"]}>
+          <DivWithToolTip
+            className={css["flip__container"]}
+            tooltipLabel="Flip card"
+          >
+            <FontAwesomeIcon
+              className={css["flip-icon"]}
+              onClick={handleFlip}
+              icon={faShare}
+              size={"2x"}
+            />
+          </DivWithToolTip>
+          <div className={css["image__container"]}>
+            {editable && (
+              <label
+                className={css["edit-image__container"]}
+                htmlFor="upload-photo"
               >
-                <FontAwesomeIcon icon={faCamera} size={"2x"} />
-                <input
-                  id="upload-photo"
-                  type="file"
-                  accept=".png,.jpeg,.jpg"
-                  onChange={(e) => handleUpload(e)}
-                />
-              </DivWithToolTip>
-            </label>
-          )}
+                <DivWithToolTip
+                  className={css["edit-image"]}
+                  tooltipLabel="Change photo"
+                >
+                  <FontAwesomeIcon icon={faCamera} size={"2x"} />
+                  <input
+                    id="upload-photo"
+                    type="file"
+                    accept=".png,.jpeg,.jpg"
+                    onChange={(e) => handleUpload(e)}
+                  />
+                </DivWithToolTip>
+              </label>
+            )}
 
-          <Image
-            className={css["card-image"]}
-            src={imageUrl}
-            width={300}
-            height={300}
-            layout={"fixed"}
-          />
-        </div>
-        <div className={css["card-info"]}>
-          <div className={css["card-header"]}>
-            <div className={css["card-heading"]}>
-              <div className={css["user-name"]}>
-                {fullName(user)}
+            <Image
+              className={css["card-image"]}
+              src={imageUrl}
+              width={300}
+              height={300}
+              layout={"fixed"}
+            />
+          </div>
+          <div className={css["card-info"]}>
+            <div className={css["card-header"]}>
+              <div className={css["card-heading"]}>
+                <div className={css["user-name"]}>
+                  {fullName(user)}
 
-                {editable && (
-                  <DivWithToolTip tooltipLabel="Edit my card">
-                    <FontAwesomeIcon
-                      className={css["edit-icon"]}
-                      icon={faPen}
-                    />
-                  </DivWithToolTip>
-                )}
+                  {editable && (
+                    <DivWithToolTip tooltipLabel="Edit my card">
+                      <FontAwesomeIcon
+                        className={css["edit-icon"]}
+                        icon={faPen}
+                      />
+                    </DivWithToolTip>
+                  )}
+                </div>
+
+                <Link href={`/profile/${user.id}/detail`}>
+                  <a>
+                    <DivWithToolTip tooltipLabel="Details">
+                      <FontAwesomeIcon
+                        className={css["info-icon"]}
+                        icon={faCircleInfo}
+                        size={"1x"}
+                      />
+                    </DivWithToolTip>
+                  </a>
+                </Link>
               </div>
-
-              <Link href={`/profile/${user.id}/detail`}>
-                <a>
-                  <DivWithToolTip tooltipLabel="Details">
-                    <FontAwesomeIcon
-                      className={css["info-icon"]}
-                      icon={faCircleInfo}
-                      size={"1x"}
-                    />
-                  </DivWithToolTip>
-                </a>
-              </Link>
+              <div className={css["card-sub-heading"]}>{user.title}</div>
             </div>
-            <div className={css["card-sub-heading"]}>{user.title}</div>
-          </div>
-          <div className={css["card-body"]}>
-            <span className={css["card-label"]}>AGE</span>
-            <span className={css["card-data"]}>30</span>
-            <span className={css["card-label"]}>ADDRESS</span>
-            <span className={css["card-data"]}>some address</span>
-            <span className={css["card-label"]}>PHONE</span>
-            <span className={css["card-data"]}>{user.phone}</span>
-            <span className={css["card-label"]}>E-MAIL</span>
-            <span className={css["card-data"]}>{user.email}</span>
+            <div className={css["card-body"]}>
+              <div>
+                <span className={css["card-icon"]}>
+                  <FontAwesomeIcon icon={faLocationDot} size={"lg"} />
+                </span>
+                <span className={css["card-data"]}>{user.address}</span>
+              </div>
+              <div>
+                <span className={css["card-icon"]}>
+                  <FontAwesomeIcon icon={faPhone} size={"lg"} />
+                </span>
+                <span className={css["card-data"]}>{user.phone}</span>
+              </div>
+              <div>
+                <span className={css["card-icon"]}>
+                  <FontAwesomeIcon icon={faEnvelope} size={"lg"} />
+                </span>
+                <span className={css["card-data"]}>{user.email}</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={css["card-footer"]}>
-        <div className={css["footer-item"]}>
-          <div className={css["secondary-title"]}>Education</div>
-          <ul>
-            <span>Computer Science - Bachelor</span>
-          </ul>
+        <div className={css["card-footer"]}>
+          <div className={css["footer-item"]}>
+            <div className={css["secondary-title"]}>Education</div>
+            <ul>
+              <span>{user.educations[0].title}</span>
+            </ul>
+          </div>
+          <div className={css["footer-item"]}>
+            <div className={css["secondary-title"]}>Work Experience</div>
+            <ul>
+              <span>{user.works[0].title}</span>
+            </ul>
+          </div>
         </div>
+      </>
+    );
+  };
 
-        <div className={css["footer-item"]}>
-          <div className={css["secondary-title"]}>Work Experience</div>
-          <ul>
-            <span>Foton</span>
-          </ul>
+  const getBackCard = () => {
+    return (
+      <>
+        <div className={css["back-card"]}>
+          <DivWithToolTip
+            className={css["flip__container"]}
+            tooltipLabel="Flip card"
+          >
+            <FontAwesomeIcon
+              className={css["flip-icon"]}
+              onClick={handleFlip}
+              icon={faShare}
+              size={"2x"}
+            />
+          </DivWithToolTip>
         </div>
-        <div className={css["footer-item"]}>
-          <div className={css["secondary-title"]}>Skills</div>
-          <ul>
-            <span>Java</span>
-          </ul>
-        </div>
+      </>
+    );
+  };
+
+  return (
+    <div className={css["edge"]}>
+      <div className={`${css["card__container"]} ${flipped && css["flip"]}`}>
+        {flipped ? getBackCard() : getFrontCard()}
       </div>
     </div>
   );

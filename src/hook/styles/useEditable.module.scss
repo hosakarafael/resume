@@ -21,6 +21,10 @@
   span.editable {
     width: 100%;
     min-width: 100px;
+    &[data-placeholder]:empty::before {
+      color: lightgray;
+      content: attr(data-placeholder);
+    }
   }
 
   input.editable {
