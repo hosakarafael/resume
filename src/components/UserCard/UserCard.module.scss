@@ -5,15 +5,12 @@
   flex-direction: column;
   height: 600px;
   width: 1200px;
-  background: t.$light-secondary-bgcolor;
-  border-radius: 30px;
-  border-top-left-radius: 45% 65%;
   gap: 30px;
   box-shadow: t.$light-box-shadow;
   transition: transform 0.3s;
 }
 
-.edge {
+.background {
   margin-top: 6rem;
   background-color: t.$light-primary-color;
   border-radius: 30px;
@@ -24,27 +21,37 @@
   perspective: 1000px;
 }
 
-.front-card {
-  display: flex;
+.flip-icon {
+  color: t.$light-secondary-bgcolor;
+}
+
+.front-card__container {
+  background: t.$light-secondary-bgcolor;
+  border-radius: 30px;
+  border-top-left-radius: 45% 65%;
+  border-bottom-right-radius: 45% 65%;
   padding: 2rem;
   height: 1500px;
+}
 
-  & .flip-icon {
-    color: t.$light-secondary-bgcolor;
-  }
+.back-card__container {
+  background: t.$light-secondary-bgcolor;
+  border-radius: 30px;
+  border-top-left-radius: 45% 65%;
+  border-bottom-right-radius: 45% 65%;
+  height: 100%;
+  position: absolute;
+  transform: rotateY(180deg);
+  padding: 2rem;
+  width: 100%;
+}
+
+.front-card {
+  display: flex;
 }
 
 .back-card {
-  position: absolute;
-  transform: rotateY(180deg);
   display: flex;
-  padding: 2rem;
-  width: 100%;
-  height: 1500px;
-
-  & .flip-icon {
-    color: t.$dark-primary-color;
-  }
 }
 
 .flip__container {
@@ -71,12 +78,13 @@
 .image__container {
   width: 400px;
   position: relative;
+  height: fit-content;
 }
 
 .edit-image__container {
   position: absolute;
   right: 10px;
-  bottom: 100px;
+  bottom: 30px;
   z-index: 1;
 }
 
@@ -183,13 +191,9 @@
 }
 
 .card-footer {
-  background-color: t.$light-primary-color;
+  //background-color: t.$light-primary-color;
   border-radius: 0 0 30px 30px;
   height: 100%;
   display: flex;
   justify-content: space-around;
-}
-
-.footer-item {
-  color: white;
 }
