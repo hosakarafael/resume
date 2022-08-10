@@ -31,7 +31,13 @@ export function useEditableText(
 
   const renderEditableField = (editable: boolean, placeHolder?: string) => {
     return (
-      <div className={css["editable-text__container"]}>
+      <div
+        className={
+          placeHolder
+            ? `${css["editable-text__container"]} ${css["placeholder"]}`
+            : css["editable-text__container"]
+        }
+      >
         <span
           ref={ref}
           data-placeholder={placeHolder ?? ""}

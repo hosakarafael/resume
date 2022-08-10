@@ -3,7 +3,6 @@ import {
   faCircleInfo,
   faEnvelope,
   faLocationDot,
-  faPen,
   faPhone,
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
@@ -98,18 +97,7 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
             <div className={css["card-info"]}>
               <div className={css["card-header"]}>
                 <div className={css["card-heading"]}>
-                  <div className={css["user-name"]}>
-                    {fullName(user)}
-
-                    {editable && (
-                      <DivWithToolTip tooltipLabel="Edit my card">
-                        <FontAwesomeIcon
-                          className={css["edit-icon"]}
-                          icon={faPen}
-                        />
-                      </DivWithToolTip>
-                    )}
-                  </div>
+                  <div className={css["user-name"]}>{fullName(user)}</div>
 
                   <Link href={`/profile/${user.id}/detail`}>
                     <a>
@@ -151,7 +139,7 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
           <div className={css["front-footer"]}>
             <div className={css["secondary-title"]}>Education</div>
             <ul>
-              <span>{user.educations[0].title}</span>
+              <span>{user.educations[0]?.title}</span>
             </ul>
           </div>
         </div>
