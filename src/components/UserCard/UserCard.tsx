@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@prisma/client";
 import axios from "axios";
 import Router from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fullName } from "../../models/UserEntity";
 import getAxios from "../../utils/getAxios";
 
@@ -18,28 +18,40 @@ import css from "./UserCard.module.scss";
 import Image from "next/image";
 import DivWithToolTip from "../ToolTip/DivWithToolTip";
 import Link from "next/link";
+import Spinner from "../Spinner/Spinner";
 
 interface UserCardProps {
   user: User;
-  imageUrl: string;
+  imageUrl: string | null;
   editable?: boolean;
 }
 
 const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
+  const [image, setImage] = useState<string | null>(null);
+
   const [flipped, setFlipped] = useState(false);
+
+  useEffect(() => {
+    setImage(imageUrl);
+  }, [imageUrl]);
 
   const handleUpload = async (e: React.FormEvent) => {
     const element = e.target;
 
     if (element instanceof HTMLInputElement) {
       const files = element.files;
+      console.log(files);
 
       if (files) {
+        setImage(null);
         const { data } = await getAxios().post(`/users/${user.id}/upload`, {
           name: files[0].name,
           type: files[0].type,
         });
+
+        //create image on aws
         await axios.put(data, files[0]);
+        //refresh page
         Router.push(`/profile/${user.id}`);
       }
     }
@@ -85,14 +97,15 @@ const UserCard = ({ user, imageUrl, editable = false }: UserCardProps) => {
                   </DivWithToolTip>
                 </label>
               )}
-
-              <Image
-                className={css["card-image"]}
-                src={imageUrl}
-                width={300}
-                height={300}
-                layout={"fixed"}
-              />
+              <Spinner show={image === null} sizeClass="size--300">
+                <Image
+                  className={css["card-image"]}
+                  src={image as string}
+                  width={300}
+                  height={300}
+                  layout={"fixed"}
+                />
+              </Spinner>
             </div>
             <div className={css["card-info"]}>
               <div className={css["card-header"]}>

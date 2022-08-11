@@ -89,7 +89,11 @@ export function useEditableSections(
             <div className={css["title"]}>
               <InfoItem>{sections[index].title}</InfoItem>
             </div>
-            <InfoItem>{sections[index].description}</InfoItem>
+            <InfoItem>
+              <span className={css["uneditable"]}>
+                {sections[index].description}
+              </span>
+            </InfoItem>
           </>
         )}
       </div>

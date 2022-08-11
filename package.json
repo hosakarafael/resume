@@ -1,6 +1,6 @@
 {
   "name": "resume",
-  "version": "0.25.38",
+  "version": "0.25.41",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8000",

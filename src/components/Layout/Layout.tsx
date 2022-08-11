@@ -29,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
 
         <div className={css["footer"]}>
-          Rafael Hideki Hosaka © 2022 ResuMe
+          <span>Rafael Hideki Hosaka © 2022 ResuMe</span>
           {process.env.NEXT_PUBLIC_APP_VERSION}
         </div>
       </div>
