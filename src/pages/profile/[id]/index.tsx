@@ -35,7 +35,6 @@ export const getServerSideProps: GetServerSideProps<ProfileProps | {}> = async (
   const id = context.query.id as string;
 
   if (id === "undefined") {
-    console.log(id);
     return REDIRECT_REQUEST_LOGOUT;
   }
 
