@@ -9,6 +9,7 @@ h1,
 h2,
 h3,
 h4,
+h5,
 p,
 figure,
 blockquote,
@@ -48,8 +49,8 @@ textarea,
 select {
   font: inherit;
   box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 @media (prefers-reduced-motion: reduce) {

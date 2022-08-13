@@ -1,0 +1,147 @@
+@use "../../styles/abstracts/theme" as t;
+
+.home__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  font-size: 3rem;
+  overflow-y: scroll;
+  padding: 2rem;
+}
+
+.introduction {
+  min-width: 1160px;
+  display: flex;
+  flex-direction: column;
+  height: 101vh;
+  overflow: hidden;
+  padding: 50px;
+
+  p {
+    align-self: flex-end;
+  }
+}
+
+.image__container {
+  align-self: center;
+
+  & img {
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.name {
+  font-size: 10rem;
+  line-height: 8rem;
+}
+
+.projects__container {
+  display: grid;
+  grid-template-columns: auto auto;
+  position: relative;
+  margin-top: 2rem;
+  border: 1px solid t.$light-secondary-color;
+  border-radius: 20px;
+}
+
+.projects {
+  margin: 1rem;
+  color: black;
+  background: t.$light-secondary-bgcolor;
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+
+  &:hover {
+    filter: brightness(80%);
+    cursor: pointer;
+  }
+}
+
+.project__container {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.project {
+  color: black;
+  background: t.$light-secondary-bgcolor;
+  border-radius: 20px;
+  margin: 2rem;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.project__header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid t.$light-secondary-color;
+  padding: 1rem;
+}
+
+.project__body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr auto;
+  height: 100%;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 7rem;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > svg {
+    background: t.$light-secondary-color;
+    border-radius: 50%;
+    padding: 3rem;
+    width: 150px;
+  }
+}
+
+.icon:first {
+  grid-column: 3/4;
+}
+
+.icon:last-of-type {
+  grid-column: 1/2;
+}
+
+.desc__container {
+  grid-column: 1/3;
+}
+
+.tech__container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  grid-column: 2/4;
+  white-space: pre-wrap;
+}
+
+.close-btn {
+  background-color: t.$light-secondary-color;
+  border-radius: 50%;
+  padding: 1rem;
+  display: flex;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+  }
+
+  & svg {
+    width: 30px;
+  }
+}
