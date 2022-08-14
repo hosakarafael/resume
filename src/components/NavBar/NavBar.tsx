@@ -56,14 +56,7 @@ const NavBar = () => {
         >
           <FontAwesomeIcon icon={faImagePortrait} className={css["nav-icon"]} />
         </NavLinkWithToolTip>
-        <NavLinkWithToolTip
-          tooltipLabel="Register"
-          className={css["nav-item"]}
-          activeClass={css["active"]}
-          to={"/register"}
-        >
-          <FontAwesomeIcon icon={faUserPlus} className={css["nav-icon"]} />
-        </NavLinkWithToolTip>
+
         {currentUser ? (
           <NavLinkWithToolTip
             tooltipLabel="Logout"
@@ -77,17 +70,27 @@ const NavBar = () => {
             />
           </NavLinkWithToolTip>
         ) : (
-          <NavLinkWithToolTip
-            tooltipLabel="Login"
-            className={css["nav-item"]}
-            activeClass={css["active"]}
-            to={"/login"}
-          >
-            <FontAwesomeIcon
-              icon={faArrowRightToBracket}
-              className={css["nav-icon"]}
-            />
-          </NavLinkWithToolTip>
+          <>
+            <NavLinkWithToolTip
+              tooltipLabel="Register"
+              className={css["nav-item"]}
+              activeClass={css["active"]}
+              to={"/register"}
+            >
+              <FontAwesomeIcon icon={faUserPlus} className={css["nav-icon"]} />
+            </NavLinkWithToolTip>
+            <NavLinkWithToolTip
+              tooltipLabel="Login"
+              className={css["nav-item"]}
+              activeClass={css["active"]}
+              to={"/login"}
+            >
+              <FontAwesomeIcon
+                icon={faArrowRightToBracket}
+                className={css["nav-icon"]}
+              />
+            </NavLinkWithToolTip>
+          </>
         )}
       </div>
     </nav>
