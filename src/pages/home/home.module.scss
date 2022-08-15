@@ -73,6 +73,7 @@ $projects-color: (
     justify-content: space-between;
     background-color: $value;
     padding: 1rem;
+    border-radius: 20px 20px 0 0;
   }
 }
 
@@ -106,18 +107,6 @@ $projects-color: (
   font-size: 7rem;
 }
 
-.icon__top,
-.icon__bottom {
-  display: flex;
-
-  & > svg {
-    background: t.$light-secondary-color;
-    border-radius: 50%;
-    padding: 3rem;
-    width: 150px;
-  }
-}
-
 .icon:first {
   grid-column: 3/4;
 }
@@ -129,13 +118,11 @@ $projects-color: (
 .desc__container {
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
   white-space: pre-wrap;
 }
 
 .tech__container {
   display: flex;
-  border-radius: 20px;
   grid-column: 2/4;
   white-space: pre-wrap;
   bottom: 10px;
