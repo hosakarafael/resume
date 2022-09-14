@@ -122,7 +122,7 @@ const Home = () => {
         </div>
         <span>Hello! My name is</span>
         <h1 className={css["name"]}>Rafael Hideki Hosaka</h1>
-        <p>I'm Web Developer</p>
+        <p>I&apos;m Web Developer</p>
       </div>
       <HomeSection full={false}>
         <motion.div
@@ -203,7 +203,7 @@ const Home = () => {
                     <p>{item.description}</p>
                     <ul>
                       {item.functionalities?.map((f) => (
-                        <li>{f}</li>
+                        <li key={f}>{f}</li>
                       ))}
                     </ul>
                   </div>
