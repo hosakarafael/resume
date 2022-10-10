@@ -113,12 +113,7 @@ const Home = () => {
     <div className={css["home__container"]}>
       <div className={`${css["introduction"]} ${css["section"]}`}>
         <div className={css["image__container"]}>
-          <Image
-            src={"/images/me.jpeg"}
-            width={300}
-            height={300}
-            layout={"fixed"}
-          />
+          <img src={"/images/me.jpeg"} width={300} height={300} />
         </div>
         <span>Hello! My name is</span>
         <h1 className={css["name"]}>Rafael Hideki Hosaka</h1>
